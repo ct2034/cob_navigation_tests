@@ -1,0 +1,7 @@
+/home/aub-ch/ipa_test_hydro_ws/build/cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir
+/home/aub-ch/ipa_test_hydro_ws/build/CMakeFiles/clean_test_results.dir
+/home/aub-ch/ipa_test_hydro_ws/build/CMakeFiles/doxygen.dir
+/home/aub-ch/ipa_test_hydro_ws/build/gtest/CMakeFiles/gtest.dir
+/home/aub-ch/ipa_test_hydro_ws/build/gtest/CMakeFiles/gtest_main.dir
+/home/aub-ch/ipa_test_hydro_ws/build/CMakeFiles/run_tests.dir
+/home/aub-ch/ipa_test_hydro_ws/build/CMakeFiles/tests.dir
