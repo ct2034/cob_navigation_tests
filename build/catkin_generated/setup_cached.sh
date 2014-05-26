@@ -5,15 +5,6 @@
 # it emulates the modifications of the setup script without recurring computations
 
 # new environment variables
-export CATKIN_TEST_RESULTS_DIR="/home/aub-ch/ipa_test_hydro_ws/build/test_results"
-export ROS_TEST_RESULTS_DIR="/home/aub-ch/ipa_test_hydro_ws/build/test_results"
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/aub-ch/ipa_test_hydro_ws/devel:$CMAKE_PREFIX_PATH"
-export CPATH="/home/aub-ch/ipa_test_hydro_ws/devel/include:$CPATH"
-export LD_LIBRARY_PATH="/home/aub-ch/ipa_test_hydro_ws/devel/lib:$LD_LIBRARY_PATH"
-export PATH="/home/aub-ch/ipa_test_hydro_ws/devel/bin:$PATH"
-export PKG_CONFIG_PATH="/home/aub-ch/ipa_test_hydro_ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PWD="/home/aub-ch/ipa_test_hydro_ws/build"
-export PYTHONPATH="/home/aub-ch/ipa_test_hydro_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"
-export ROS_PACKAGE_PATH="/home/aub-ch/ipa_test_hydro_ws/src:$ROS_PACKAGE_PATH"
+export PWD="/home/ch/ros/hydro_ws/build"

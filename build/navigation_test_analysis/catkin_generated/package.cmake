@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "navigation_test_analysis")
+set(navigation_test_analysis_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
+set(navigation_test_analysis_DEPRECATED "")
+set(navigation_test_analysis_VERSION "1.0.0")
+set(navigation_test_analysis_BUILD_DEPENDS "cv_bridge" "navigation_test_helper" "std_srvs")
+set(navigation_test_analysis_RUN_DEPENDS "cv_bridge" "navigation_test_helper" "std_srvs")
+set(navigation_test_analysis_BUILDTOOL_DEPENDS "catkin")

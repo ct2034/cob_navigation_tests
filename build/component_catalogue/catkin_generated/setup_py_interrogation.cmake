@@ -1,0 +1,6 @@
+set(component_catalogue_SETUP_PY_VERSION "1.0.0")
+set(component_catalogue_SETUP_PY_SCRIPTS "")
+set(component_catalogue_SETUP_PY_PACKAGES "navigation_test_helper")
+set(component_catalogue_SETUP_PY_PACKAGE_DIRS "src/navigation_test_helper")
+set(component_catalogue_SETUP_PY_MODULES "")
+set(component_catalogue_SETUP_PY_MODULE_DIRS "")

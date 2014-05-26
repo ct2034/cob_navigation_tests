@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aub-ch/ipa_test_hydro_ws/src
+CMAKE_SOURCE_DIR = /home/ch/ros/hydro_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aub-ch/ipa_test_hydro_ws/build
+CMAKE_BINARY_DIR = /home/ch/ros/hydro_ws/build
 
 # Utility rule file for _catkin_empty_exported_target.
 
@@ -53,10 +53,10 @@ cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/build: _catkin
 .PHONY : cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/build
 
 cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	cd /home/aub-ch/ipa_test_hydro_ws/build/cob_navigation_tests && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
+	cd /home/ch/ros/hydro_ws/build/cob_navigation_tests && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
 .PHONY : cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/depend:
-	cd /home/aub-ch/ipa_test_hydro_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aub-ch/ipa_test_hydro_ws/src /home/aub-ch/ipa_test_hydro_ws/src/cob_navigation_tests /home/aub-ch/ipa_test_hydro_ws/build /home/aub-ch/ipa_test_hydro_ws/build/cob_navigation_tests /home/aub-ch/ipa_test_hydro_ws/build/cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ch/ros/hydro_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ch/ros/hydro_ws/src /home/ch/ros/hydro_ws/src/cob_navigation_tests /home/ch/ros/hydro_ws/build /home/ch/ros/hydro_ws/build/cob_navigation_tests /home/ch/ros/hydro_ws/build/cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : cob_navigation_tests/CMakeFiles/_catkin_empty_exported_target.dir/depend
 

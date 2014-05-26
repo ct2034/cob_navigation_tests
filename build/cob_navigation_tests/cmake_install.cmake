@@ -1,8 +1,8 @@
-# Install script for directory: /home/aub-ch/ipa_test_hydro_ws/src/cob_navigation_tests
+# Install script for directory: /home/ch/ros/hydro_ws/src/cob_navigation_tests
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/aub-ch/ipa_test_hydro_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/ch/ros/hydro_ws/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,6 +33,6 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cob_navigation_tests" TYPE FILE FILES "/home/aub-ch/ipa_test_hydro_ws/src/cob_navigation_tests/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cob_navigation_tests" TYPE FILE FILES "/home/ch/ros/hydro_ws/src/cob_navigation_tests/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

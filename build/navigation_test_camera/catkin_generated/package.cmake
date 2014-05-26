@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "navigation_test_camera")
+set(navigation_test_camera_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
+set(navigation_test_camera_DEPRECATED "")
+set(navigation_test_camera_VERSION "1.0.0")
+set(navigation_test_camera_BUILD_DEPENDS "cv_bridge" "gazebo" "gazebo_msgs" "image_transport" "message_filters" "nav_msgs" "navigation_test_helper" "opencv2" "sensor_msgs")
+set(navigation_test_camera_RUN_DEPENDS "cv_bridge" "gazebo" "gazebo_msgs" "image_transport" "message_filters" "nav_msgs" "navigation_test_helper" "opencv2" "sensor_msgs")
+set(navigation_test_camera_BUILDTOOL_DEPENDS "catkin")

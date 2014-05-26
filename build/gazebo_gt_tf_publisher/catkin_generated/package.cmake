@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "gazebo_gt_tf_publisher")
+set(gazebo_gt_tf_publisher_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
+set(gazebo_gt_tf_publisher_DEPRECATED "")
+set(gazebo_gt_tf_publisher_VERSION "1.0.0")
+set(gazebo_gt_tf_publisher_BUILD_DEPENDS "cv_bridge" "gazebo_msgs" "rospy")
+set(gazebo_gt_tf_publisher_RUN_DEPENDS "cv_bridge" "gazebo_msgs" "rospy")
+set(gazebo_gt_tf_publisher_BUILDTOOL_DEPENDS "catkin")

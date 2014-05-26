@@ -1,0 +1,8 @@
+prefix=/home/ch/ros/hydro_ws/devel
+
+Name: gazebo_gt_tf_publisher
+Description: Description of gazebo_gt_tf_publisher
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/ch/ros/hydro_ws/devel/lib 
+Requires: 
