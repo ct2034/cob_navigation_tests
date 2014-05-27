@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot" />
+    <node name="navigation_testprepare_robot_simulation" pkg="navigation_test_prepare_robot" type="prepareRobot.py" output="screen">
+        <param name="robotConfig" value="$( find navigation_test_prepare_robot)/config/$( arg robot ).yaml" />
+    </node>
+</launch>

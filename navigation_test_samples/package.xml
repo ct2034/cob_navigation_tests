@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>navigation_test_samples</name>
+  <version>1.0.0</version>
+  <description>This packages contains the meta information to feed navigation_test_skeleton</description>
+
+  <maintainer email="uhr-se@ipa.fraunhofer.de">Simon Ebner</maintainer>
+
+  <license>LGPL</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cob_bringup_sim</build_depend>
+  <build_depend>cob_navigation_global</build_depend>
+  <build_depend>navigation_test_collision_detection</build_depend>
+  <build_depend>navigation_test_helper</build_depend>
+  <build_depend>navigation_test_prepare_robot</build_depend>
+  <build_depend>navigation_test_samples_gazebo_objects</build_depend>
+  <build_depend>navigation_test_skeleton</build_depend>
+  
+  <run_depend>cob_bringup_sim</run_depend>
+  <run_depend>cob_navigation_global</run_depend>
+  <run_depend>navigation_test_collision_detection</run_depend>
+  <run_depend>navigation_test_helper</run_depend>
+  <run_depend>navigation_test_prepare_robot</run_depend>
+  <run_depend>navigation_test_samples_gazebo_objects</run_depend>
+  <run_depend>navigation_test_skeleton</run_depend>
+
+  <export>
+
+  </export>
+</package>

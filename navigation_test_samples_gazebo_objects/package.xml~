@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>navigation_test_samples_gazebo_objects</name>
+  <version>0.0.0</version>
+  <description>The navigation_test_samples_gazebo_objects package</description>
+
+  <maintainer email="uhr-se@ipa.fraunhofer.de">Simon Ebner</maintainer>
+
+  <license>LGPL</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>gazebo</build_depend>
+  
+  <run_depend>gazebo</run_depend>
+
+  <export>
+  
+  </export>
+</package>

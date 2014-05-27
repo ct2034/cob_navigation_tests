@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <name>navigation_test_prepare_robot</name>
+  <version>1.0.0</version>
+  <description>Parepare the robot for a navigation scenario.
+      Fold in arm for example</description>
+
+  <maintainer email="uhr-se@ipa.fraunhofer.de">Simon Ebner</maintainer>
+
+  <license>LGPL</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>cob_script_server</build_depend>
+  <build_depend>navigation_test_helper</build_depend>
+  <build_depend>rospy</build_depend>
+  
+  <run_depend>cob_script_server</run_depend>
+  <run_depend>navigation_test_helper</run_depend>
+  <run_depend>rospy</run_depend>
+
+  <export>
+    
+  </export>
+</package>

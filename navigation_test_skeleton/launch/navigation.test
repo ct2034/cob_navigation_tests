@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="scenarioName" />
+    <arg name="robot" />
+    <arg name="navigation" />
+    <arg name="sim" default="false" />
+    <param name="bagPath"      value="$( optenv BAGPATH /tmp )" />
+
+    <include file="$( find navigation_test_skeleton )/launch/bag_record.launch" />
+
+    <include if="$( arg sim )" file="$( find navigation_test_camera )/launch/spawn_camera.launch" />
+
+    <!-- Set time-limit practically to infinitiy and abort within the test script to shut
+         everything down properly -->
+    <test test-name="$( anon navigation_test )" pkg="navigation_test_skeleton" type="navigation_test.py" time-limit="1000000">
+        <param name="scenarioName" value="$( arg scenarioName )" />
+        <param name="robot"        value="$( arg robot )" />
+        <param name="navigation"   value="$( arg navigation )" />
+    </test>
+</launch>

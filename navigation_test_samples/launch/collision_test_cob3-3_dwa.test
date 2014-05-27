@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$( find navigation_test_samples )/launch/sample_test_cob3-3_dwa.test">
+        <arg name="scenarioName" value="collision" />
+    </include>
+
+    <include file="$( find navigation_test_samples_gazebo_objects )/launch/large_light_table.launch" />
+</launch>
