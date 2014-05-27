@@ -6,16 +6,16 @@ project(navigation_test_camera)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   cv_bridge
-  gazebo
+  gazebo_ros
   gazebo_msgs
   image_transport
   message_filters
   nav_msgs
   navigation_test_helper
-  opencv2
   sensor_msgs
 )
 
+find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 

@@ -5,7 +5,7 @@ project(navigation_test_samples_gazebo_objects)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  gazebo
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
