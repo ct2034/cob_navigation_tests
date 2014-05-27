@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "cob_navigation_tests")
-set(cob_navigation_tests_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
-set(cob_navigation_tests_DEPRECATED "")
-set(cob_navigation_tests_VERSION "1.0.0")
-set(cob_navigation_tests_BUILD_DEPENDS )
-set(cob_navigation_tests_RUN_DEPENDS "cob_command_tools" "cob_environments" "cob_navigation" "cob_robots" "cob_simulation" "ros" "ros_comm" "simulator_gazebo")
-set(cob_navigation_tests_BUILDTOOL_DEPENDS "catkin")

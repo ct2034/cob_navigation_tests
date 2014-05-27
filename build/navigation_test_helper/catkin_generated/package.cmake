@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "navigation_test_helper")
-set(navigation_test_helper_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
-set(navigation_test_helper_DEPRECATED "")
-set(navigation_test_helper_VERSION "1.0.0")
-set(navigation_test_helper_BUILD_DEPENDS "actionlib" "actionlib_msgs" "gazebo" "gazebo_msgs" "move_base_msgs" "rospy" "std_msgs" "std_srvs" "tf")
-set(navigation_test_helper_RUN_DEPENDS "actionlib" "actionlib_msgs" "gazebo" "gazebo_msgs" "move_base_msgs" "rospy" "std_msgs" "std_srvs" "tf")
-set(navigation_test_helper_BUILDTOOL_DEPENDS "catkin")

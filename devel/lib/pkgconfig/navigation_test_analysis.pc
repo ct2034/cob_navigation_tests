@@ -1,8 +1,0 @@
-prefix=/home/ch/ros/hydro_ws/devel
-
-Name: navigation_test_analysis
-Description: Description of navigation_test_analysis
-Version: 1.0.0
-Cflags: 
-Libs: -L/home/ch/ros/hydro_ws/devel/lib 
-Requires: 

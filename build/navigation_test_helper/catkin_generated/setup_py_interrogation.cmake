@@ -1,6 +1,0 @@
-set(navigation_test_helper_SETUP_PY_VERSION "1.0.0")
-set(navigation_test_helper_SETUP_PY_SCRIPTS "src/git.py")
-set(navigation_test_helper_SETUP_PY_PACKAGES "navigation_test_helper")
-set(navigation_test_helper_SETUP_PY_PACKAGE_DIRS "src/navigation_test_helper")
-set(navigation_test_helper_SETUP_PY_MODULES "")
-set(navigation_test_helper_SETUP_PY_MODULE_DIRS "")

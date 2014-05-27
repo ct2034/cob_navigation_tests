@@ -1,8 +1,0 @@
-<div class="devView">
-    <ul class="tabs">
-        <li class="tab application">Application Developer</li>
-        <li class="tab component">Component Developer</li>
-    </ul>
-    <div class="tabContent">
-    </div>
-</div>

@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "component_catalogue")
-set(component_catalogue_MAINTAINER "Simon Ebner <uhr-se@ipa.fraunhofer.de>")
-set(component_catalogue_DEPRECATED "")
-set(component_catalogue_VERSION "1.0.0")
-set(component_catalogue_BUILD_DEPENDS "navigation_test_helper")
-set(component_catalogue_RUN_DEPENDS "navigation_test_helper")
-set(component_catalogue_BUILDTOOL_DEPENDS "catkin")
