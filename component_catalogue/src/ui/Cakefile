@@ -1,0 +1,65 @@
+{exec} = require 'child_process'
+watchr = require 'watchr'
+fs = require 'fs'
+
+task 'watch:build', ( options )->
+  options.dontThrowError = true
+  console.log 'Watching files for change'
+  invoke 'build'
+  watchr.watch
+    paths: [ 'src', 'templates' ]
+    duplicateDelay: 1200
+    ingoreCustomPatterns: '(.*)\\.js'
+    listener:
+      change: ( e, filename )->
+        try
+          if filename.indexOf( 'src' ) == 0
+            process.stdout.write 'Changed: ' + filename + '  =>  '
+            invoke 'build:coffee'
+          else if filename.match '(.*)\.eco'
+            process.stdout.write 'Changed: ' + filename + '  =>  '
+            invoke 'build:eco'
+        catch err
+          console.log 'Error occured', err
+      watching: ->
+    next: ( err, w )->
+      throw err if err?
+
+
+task 'build', ( options )->
+    invoke 'build:coffee'
+    invoke 'build:eco'
+
+task 'build:coffee', ( options )->
+  console.log 'Building coffee files...'
+  coffee = exec 'coffee -o lib/ -c src/', ( err, stdout, stderr ) ->
+    if err
+      throw err if !options.dontThrowError
+      return console.log err
+  coffee.stdout.pipe process.stdout
+
+task 'build:eco', ( options )->
+  console.log 'Building eco files...'
+  files = fs.readdirSync './templates'
+  files.forEach ( file )->
+    matcher = file.match '(.*)\.eco'
+    return if not matcher
+    filename = matcher[ 1 ]
+    source = "./templates/#{filename}.eco"
+    dest   = "./templates/#{filename}.js"
+
+    stream = fs.createWriteStream dest
+    writeModuleOpener = ( cb )->
+      stream.write "define( [ 'ecoHelper' ], function( helper ){", 'utf-8', cb
+    writeEcoFile = ( cb )->
+      eco = exec "eco -p #{source}", ( err, stdout ) -> 
+        if err
+          throw err if !options.dontThrowError
+          return console.log err
+      eco.stdout.pipe stream, end: false
+      eco.stdout.on 'end', cb
+    writeModuleCloser = ( cb )->
+      stream.write "return this.ecoTemplates[ '#{filename}' ];});", 'utf-8', cb
+      do stream.close
+
+    writeModuleOpener -> writeEcoFile -> do writeModuleCloser

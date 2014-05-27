@@ -1,0 +1,8 @@
+{
+    "name": "Bachelor_Arbeit",
+    "dependencies": {
+        "watchr": "*",
+        "coffee-script": "*",
+        "eco": "*"
+    }
+}
