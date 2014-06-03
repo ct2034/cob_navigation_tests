@@ -3,6 +3,7 @@
    <arg name="moveBaseAction" default="/move_base" />
    <arg name="bumperTopics" default="[]" />
    <arg name="timeoutInS" default="300" />
+   <arg name="paramFile" default="$(find navigation_test_debug )/debug_config.yaml" />
 
    <group ns="/navigation_test" >
        <rosparam file="$( arg paramFile )" command="load" />
