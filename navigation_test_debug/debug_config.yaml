@@ -1,0 +1,16 @@
+timeoutInS:        300
+repository:        git@github.com:SimonEbner/navigation_test_results
+bagPath:           ~/bagFiles
+setupRobotService: setup_robot
+collisionsTopic:   collisions
+cameraTopics:      [ /topCamera ]
+moveBaseAction:    /move_base
+route: 
+    - [ -0.1, -0.1, -0.1 ]
+    - [ 0, 0, 0 ]
+
+## for cob3-6
+setupRobotService: /setup_robot
+robotConfig:
+  tray: storetray
+
