@@ -134,6 +134,7 @@ class topics_bag():
         self.trigger_topics             = self.getRequiredParam("~trigger_topics")
         self.continuous_topics          = self.getRequiredParam("~continuous_topics")
         self.bag_target_path            = self.getRequiredParam("bagPath")
+        print "topics_bag.py Recording bagfile to: " + self.bag_target_path 
         self.bag_local_path             = tempfile.gettempdir()
         self.bag_filename               = '%s.bag' % uuid.uuid4()
         self.bag_local_filepath         = self.bag_local_path + '/' + self.bag_filename
@@ -161,7 +162,11 @@ class topics_bag():
         })
 
     def getRequiredParam( self, key ):
-        value = rospy.get_param( key )
+        try:
+            value = rospy.get_param( key )
+        except KeyError,e:
+            print "EXCEPTION KeyError in topics_bag.py"
+            return
         if value is None:
             raise Exception( 'Could not load paramter %s' % key )
         return value
