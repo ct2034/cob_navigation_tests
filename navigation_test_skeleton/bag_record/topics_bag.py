@@ -165,8 +165,7 @@ class topics_bag():
         try:
             value = rospy.get_param( key )
         except KeyError,e:
-            print "EXCEPTION KeyError in topics_bag.py"
-            return
+            raise Exception( 'Could not load paramter %s, Exception: KeyError (topics_bag.py)' % key )
         if value is None:
             raise Exception( 'Could not load paramter %s' % key )
         return value
