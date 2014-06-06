@@ -5,6 +5,7 @@ project(navigation_test_camera)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
   cv_bridge
   gazebo_ros
   gazebo_msgs
@@ -108,17 +109,17 @@ include_directories(
 #   src/${PROJECT_NAME}/navigation_test_camera.cpp
 # )
 
-## Declare a cpp executable
-# add_executable(navigation_test_camera_node src/navigation_test_camera_node.cpp)
+## Declare a cpp executableadd_executable(navigation_test_camera_node src/navigation_test_camera_node.cpp)
+add_executable(map_to_image src/navigation_test_camera/map_to_image.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(navigation_test_camera_node navigation_test_camera_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(navigation_test_camera_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(map_to_image
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
