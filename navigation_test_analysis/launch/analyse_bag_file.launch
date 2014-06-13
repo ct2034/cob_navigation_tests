@@ -3,7 +3,7 @@
     <arg name="videoConfig" />
     <arg name="filepath" />
     <arg name="videofilepath" />
-    <arg name="speed"      default="8" />
+    <arg name="speed"      default="16" />
     <arg name="repository" default="fromBagfile" />
 
     <node name="extract" pkg="image_view" type="extract_images" output="screen" respawn="false" cwd="ROS_HOME">
@@ -16,5 +16,6 @@
         <param name="~videofilepath"   value="$( arg videofilepath )" />
         <param name="~speed"      value="$( arg speed )" />
         <param name="~repository" value="$( arg repository )" />
+        <param name="~threshhold" value="0.15" />
     </node>
 </launch>

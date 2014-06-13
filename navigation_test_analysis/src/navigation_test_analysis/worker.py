@@ -17,17 +17,18 @@ import rospy.service
 
 
 class Worker( object ):
-    def __init__( self, bagInfo, videofilepath ):
+    def __init__( self, bagInfo, videofilepath, threshhold, speed ):
+    
         self.bagInfo = bagInfo
         self._analyzer = None
         self._videoCreator = None
 
     def start( self, speed=1 ):
         filename = self.bagInfo.filename
-        self._analyzer = BagAnalyzer( filename )
+        self._analyzer = BagAnalyzer( filename, threshhold )
         self._analyzer.start()
         
-        self._videoCreator = VideoCreator(videofilepath)
+        self._videoCreator = VideoCreator(videofilepath, speed)
         if self._videoCreator.hasFrameFiles(): # check for existing framefiles
             self._videoCreator.deleteFrameFiles() # delete them
         # now replayer can be started as it leads to the creation of framefiles
@@ -37,7 +38,7 @@ class Worker( object ):
             player.play( speed ) # blocking -> wait for it ...
             
             ## create the video
-            self._videoCreator.createVideo( self.bagInfo.rawFilename )
+            self._videoCreator.createVideo( self.bagInfo.rawFilename, speed )
             if self._videoCreator.hasFrameFiles(): # check for existing framefiles
                 self._videoCreator.deleteFrameFiles() # delete them
                 
@@ -97,7 +98,7 @@ class Worker( object ):
         print 'BAG-FILE TCPROS-HEADER-ERROR OCCURED. TRYING TO RECOVER'
         print '-------------------------------------------------------'
         patcher = BagFilePatcher( self.bagInfo.filepath )
-        patcher.patch()
+        #patcher.patch() DEBUG
         self.bagInfo.setFixed()
         
     def _reindexBagFile( self ):
@@ -185,12 +186,12 @@ class BagAnalyzer( object ):
     class NoRepositoryNameReceivedError( Exception ): pass
     class NoFinishedStatusReceivedError( Exception ): pass
 
-    def __init__( self, filename ):
+    def __init__( self, filename, threshhold ):
         print 'Initializing Analyzer'
         self._filename                = filename
         self._metricsObserver         = MetricsObserverTF()
         self._tfDiffObserver          = TFDiffObserver(
-                '/gazebo_gt', '/base_link', numPoints=300 )
+                '/gazebo_gt', '/base_link', numPoints=300, jumpThreshhold=threshhold )
         self._tfPointsObserver        = TFPointsObserver(
                 [ '/gazebo_gt', '/base_link' ], numPoints=100 )
         self._metricsObserver.dT      = 0
@@ -257,6 +258,11 @@ class BagAnalyzer( object ):
         data[ 'collisions'         ] = self._collisions
         data[ 'localtimeFormatted' ] = self._localtimeFormatted()
         data[ 'deltas'             ] = self._tfDiffObserver.serialize()
+        data[ 'deltas_stds'        ] = self._tfDiffObserver.serializeStds()
+        data[ 'deltas_means'       ] = self._tfDiffObserver.serializeMeans()
+        data[ 'delta_jumps'        ] = self._tfDiffObserver.serializeJumps()
+        data[ 'delta_nrof_jumps'   ] = self._tfDiffObserver.serializeNumJumps()
+        data[ 'delta_max_jump'     ] = self._tfDiffObserver.serializeMaxJump()
         data[ 'points'             ] = self._tfPointsObserver.serialize()
         data = dict( data.items() + self._setting.items() )
         return data
@@ -320,8 +326,9 @@ if __name__ == '__main__':
     rospy.init_node( 'analyse_worker', anonymous=True )
     filepath = rospy.get_param( '~filepath' )
     videofilepath = rospy.get_param( '~videofilepath' )
+    threshhold = rospy.get_param( '~threshhold' )
     speed    = rospy.get_param( '~speed' )
-    worker = Worker( BagInfo( filepath ), videofilepath )
+    worker = Worker( BagInfo( filepath ), videofilepath, threshhold, speed )
     worker.start( speed=speed )
     print 'Worker finished, all threads closed'
     print threading._active

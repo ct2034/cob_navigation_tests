@@ -9,7 +9,7 @@ import commands
 
     
 class VideoCreator( object ):
-    def __init__( self, videofilepath ):
+    def __init__( self, videofilepath, speed ):
         print '>> videoCreator: init' 
         self._videofilepath = videofilepath
         print '>> videoCreator: path: ' + self._videofilepath
@@ -17,10 +17,9 @@ class VideoCreator( object ):
         self.timeout = 10 #s     
         self.waittime = self.timeout  
         
-    def createVideo( self, filename ):
-        #filename = 'dateiname'
+    def createVideo( self, filename, speed ):
         print '>> videoCreator: CREATING'
-        command = 'cd %s; avconv -r 1 -i frame%%06d.jpg -r 20 %s.mp4' % (self._videofilepath, filename)
+        command = 'cd %s; avconv -r 1 -i frame%%06d.jpg -r %d %s.mp4' % (self._videofilepath, speed, filename)
         try:
             s=commands.getstatusoutput(command)
         except:
