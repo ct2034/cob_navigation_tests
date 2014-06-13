@@ -72,7 +72,10 @@ class TFPointsObserver( Thread ):
     def _thinPoints( self ):
         for topicName, points in self._values.items():
             factor = int( len( points ) / self._numPoints )
-            self._values[ topicName ] = points[ ::factor ]
+            if factor > 0:
+                self._values[ topicName ] = points[ ::factor ]
+            else:
+                self._values[ topicName ] = points              # SOLVING - ValueError: slice step cannot be zero
 
     def isActive( self ):
         with self._lock:
