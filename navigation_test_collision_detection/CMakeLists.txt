@@ -7,6 +7,8 @@ project(navigation_test_collision_detection)
 find_package(catkin REQUIRED COMPONENTS
   gazebo_msgs
   navigation_test_helper
+  std_msgs
+  std_srvs 
   rospy
 )
 
@@ -82,7 +84,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES navigation_test_collision_detection
-#  CATKIN_DEPENDS gazebo_msgs navigation_test_helper rospy
+  CATKIN_DEPENDS gazebo_msgs navigation_test_helper rospy message_runtime std_msgs std_srvs 
 #  DEPENDS system_lib
 )
 

@@ -74,7 +74,7 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  actionlib_msgs  gazebo_msgs  move_base_msgs  std_msgs
+  actionlib_msgs  gazebo_msgs  move_base_msgs std_msgs std_srvs
 )
 
 ###################################
@@ -111,10 +111,12 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(navigation_test_helper_node src/navigation_test_helper_node.cpp)
+# add_executable(navigation_test_helper_node src/navigation_test_helper_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(navigation_test_helper_node navigation_test_helper_generate_messages_cpp)
+# add_dependencies(navigation_test_helper ${PROJECT_NAME}_msgs)
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(navigation_test_helper_node
