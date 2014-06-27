@@ -2,8 +2,9 @@
 # continuous recording
 #continuous_topics: [/tf, /joint_states, /base_controller/command, /scan_front, /scan_rear, /scan_top, /navigation_test/status]
 continuous_topics:
-    - { topic: /tf,     type: tf/tfMessage }
-    - { topic: status,  type: navigation_test_helper/Status }
+    - { topic: /tf,         type: tf/tfMessage }
+    - { topic: status,      type: navigation_test_helper/Status }
+    - { topic: /state_ekf,  type: geometry_msgs/PoseWithCovarianceStamped }
 
 ################
 # triggered recording
