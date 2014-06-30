@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 #  gazebo
   gazebo_msgs
   move_base_msgs
+  geometry_msgs
   rospy
   std_msgs
   std_srvs

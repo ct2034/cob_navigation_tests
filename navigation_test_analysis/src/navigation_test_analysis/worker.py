@@ -7,6 +7,7 @@ import subprocess, threading
 from navigation_test_helper.metricsObserverTF import MetricsObserverTF
 from navigation_test_helper.tfDiffObserver    import TFDiffObserver
 from navigation_test_helper.tfPointsObserver  import TFPointsObserver
+from navigation_test_helper.stateEkfObserver  import StateEkfObserver
 from navigation_test_helper.jsonFileHandler   import JsonFileHandler
 from navigation_test_helper.git               import Git
 from navigation_test_helper.bagInfo           import BagInfo
@@ -194,6 +195,7 @@ class BagAnalyzer( object ):
                 '/gazebo_gt', '/base_link', numPoints=300, jumpThreshhold=threshhold )
         self._tfPointsObserver        = TFPointsObserver(
                 [ '/gazebo_gt', '/base_link' ], numPoints=100 )
+        self._stateEkfObserver        = StateEkfObserver( '/state_ekf', numPoints=100  )
         self._metricsObserver.dT      = 0
         self._duration                = 'N/A'
         self._active                  = False
@@ -232,6 +234,7 @@ class BagAnalyzer( object ):
         self._metricsObserver.start()
         self._tfDiffObserver.start()
         self._tfPointsObserver.start()
+        self._stateEkfObserver.start()
         self._startTime = None
         self._localtime = None
 
@@ -243,6 +246,7 @@ class BagAnalyzer( object ):
             self._metricsObserver.stop()
             self._tfDiffObserver.stop()
             self._tfPointsObserver.stop()
+            self._stateEkfObserver.stop()
 
     def _unregisterSubscribers( self ):
         for subscriber in self._subscribers:
@@ -264,6 +268,9 @@ class BagAnalyzer( object ):
         data[ 'delta_nrof_jumps'   ] = self._tfDiffObserver.serializeNumJumps()
         data[ 'delta_max_jump'     ] = self._tfDiffObserver.serializeMaxJump()
         data[ 'points'             ] = self._tfPointsObserver.serialize()
+        data[ 'covariance'         ] = self._stateEkfObserver.serialize()
+        data[ 'covariance_stds'    ] = self._stateEkfObserver.serializeStds()
+        data[ 'covariance_means'   ] = self._stateEkfObserver.serializeMeans()
         data = dict( data.items() + self._setting.items() )
         return data
 
