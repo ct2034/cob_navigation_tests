@@ -4,7 +4,7 @@
     <arg name="robot" />
     <arg name="navigation" />
     <arg name="sim" default="false" />
-    <param name="bagPath"      value="$( optenv BAGPATH /tmp )" />
+    <param name="bagPath"      value="$( optenv BAG_PATH /tmp )" />
 
 
     <!-- Set time-limit practically to infinitiy and abort within the test script to shut
@@ -13,6 +13,6 @@
         <param name="scenarioName" value="$( arg scenarioName )" />
         <param name="robot"        value="$( arg robot )" />
         <param name="navigation"   value="$( arg navigation )" />
-        <param name="bagPath"      value="$( optenv BAGPATH /tmp )" />
+        <param name="bagPath"      value="$( optenv BAG_PATH /tmp )" />
     </node>
 </launch>
