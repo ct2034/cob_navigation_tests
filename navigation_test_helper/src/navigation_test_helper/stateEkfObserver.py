@@ -10,7 +10,7 @@ import numpy, math
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
 class StateEkfObserver( Thread ):
-    def __init__( self, topicName, numPoints=300 ):
+    def __init__( self, topicName, numPoints ):
         Thread.__init__( self )
         self._topicName = topicName
         self._tfListener = None
@@ -64,7 +64,6 @@ class StateEkfObserver( Thread ):
                 self._topicNameA, self._topicNameB, rospy.Time( 0 )) # <- TF listenter is setup here
             self._storeDelta( timestamp, dPos, dQuat )
             time.sleep( self._dT )
-        self._thinPoints()
 
     def _thinPoints( self ):
         factor = int( len( self._covar ) / self._numPoints )
@@ -89,11 +88,11 @@ class StateEkfObserver( Thread ):
             self._active = False
 
     def serialize( self ):
+        self._thinPoints()
+        self._buildStatistics()
         return self._covar[:]
 
     def serializeStds( self ):
-        self._thinPoints()
-        self._buildStatistics()
         return self._stds[:]
 
     def serializeMeans( self ):

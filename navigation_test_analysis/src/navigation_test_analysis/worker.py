@@ -268,7 +268,7 @@ class BagAnalyzer( object ):
         data[ 'delta_nrof_jumps'   ] = self._tfDiffObserver.serializeNumJumps()
         data[ 'delta_max_jump'     ] = self._tfDiffObserver.serializeMaxJump()
         data[ 'points'             ] = self._tfPointsObserver.serialize()
-        data[ 'covariance'         ] = self._stateEkfObserver.serialize()
+        data[ 'covariances'        ] = self._stateEkfObserver.serialize()
         data[ 'covariance_stds'    ] = self._stateEkfObserver.serializeStds()
         data[ 'covariance_means'   ] = self._stateEkfObserver.serializeMeans()
         data = dict( data.items() + self._setting.items() )
