@@ -7,6 +7,8 @@ define [ 'backbone', 'templates/devView', 'views/componentDevView', 'views/appli
       'click .tab.application': "activateApplicationView"
 
     render: ->
+      alert "devView.coffee render"
+    
       @$el.html do devViewTmpl
       do @activateApplicationView
       @

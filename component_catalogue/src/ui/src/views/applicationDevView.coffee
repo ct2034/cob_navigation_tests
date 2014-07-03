@@ -4,6 +4,8 @@ define [ 'backbone', 'templates/applicationDev', 'views/applicationDevChart' ], 
     className: 'applicationDevView'
 
     initialize: ->
+      alert "applicationDevView.coffee initialize"
+
       @navigationChart = new ApplicationDevChart
         testGroups:           @options.testGroups
         variableAttributeKey: 'navigation'
