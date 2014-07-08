@@ -1,0 +1,44 @@
+<launch>
+  <arg name="robot" default="$(optenv ROBOT !!NO_ROBOT_SET!!)"/>
+  <arg name="robot_env" default="$(optenv ROBOT_ENV !!NO_ROBOT_ENV_SET!!)"/>
+  <arg name="map" default="$(find cob_default_env_config)/$(arg robot_env)/map.yaml" />
+  <arg name="slam" default="false"/>
+  <arg name="imu" default="false"/>
+  <arg name="rfid" default="false"/>
+  <arg name="nogrid" default="false"/>
+  <arg name="sensor_config" default="$(find ipa_navigation_config)/configs/raw3-1-full.yaml" />
+  
+  <node name="tf_remapper" pkg="nav_ground_truth_publisher" type="tf_remapper.py" output="screen" />
+  
+  <remap from="tf" to="gt_tf"/>
+  
+  <remap from="feature_map" to="void"/>
+  <remap from="FeatureAssociationList" to="void"/>
+  <remap from="state_ekf" to="void"/>
+  <remap from="visualize_pose_ekf" to="void"/>
+  <remap from="featList_meas" to="void"/>
+  <remap from="map" to="void"/>
+  
+  <group>
+    <!--- Run IPA localization -->
+    <!--include file="$(find ipa_navigation_bringup)/launch/ipa_loc_ekf.xml" >
+      <arg name="robot" value="$(arg robot)" />
+      <arg name="robot_env" value="$(arg robot_env)" />
+      <arg name="map" value="$(arg map)" />
+      <arg name="slam" value="$(arg slam)" />
+      <arg name="imu" value="$(arg imu)" />
+      <arg name="rfid" value="$(arg rfid)" />
+      <arg name="nogrid" value="$(arg nogrid)" />
+      <arg name="sensor_config" value="$(arg sensor_config)" /> 
+    </include-->
+    
+    <!-- load and test IPA navigation config file -->
+    <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
+    
+    <!-- start kalman filter for localization -->
+    <node name="ipa_loc_feature_fusion_ekf_node" pkg="ipa_loc_feature_fusion_ekf" type="ipa_loc_feature_fusion_ekf_node">
+      <remap from="/FeatureAssociations" to="/FeatureAssociationList" />
+    </node> 
+    
+  </group>
+</launch>

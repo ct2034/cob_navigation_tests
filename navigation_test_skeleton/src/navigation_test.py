@@ -52,6 +52,7 @@ class TestNavigation( unittest.TestCase ):
             'scenario':        rospy.get_param( '~scenarioName' ),
             'robot':           rospy.get_param( '~robot' ),
             'navigation':      rospy.get_param( '~navigation' ),
+            'sim':             rospy.get_param( '~sim' ),
             'repository':      rospy.get_param( 'repository' ),
             'cameraTopics':    rospy.get_param( 'cameraTopics' ),
             'collisionsTopic': rospy.get_param( 'collisionsTopic' )

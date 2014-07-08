@@ -3,7 +3,7 @@
     <arg name="scenarioName" />
     <arg name="robot" />
     <arg name="navigation" />
-    <arg name="sim" default="false" />
+    <arg name="sim" />
     <param name="bagPath"      value="$( optenv BAG_PATH /tmp )" />
 
     
@@ -18,5 +18,6 @@
         <param name="scenarioName" value="$( arg scenarioName )" />
         <param name="robot"        value="$( arg robot )" />
         <param name="navigation"   value="$( arg navigation )" />
+        <param name="sim"          value="$( arg sim )" />
     </test>
 </launch>
