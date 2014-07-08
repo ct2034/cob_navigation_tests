@@ -12,12 +12,12 @@
   
   <remap from="tf" to="gt_tf"/>
   
-  <remap from="feature_map" to="void"/>
-  <remap from="FeatureAssociationList" to="void"/>
-  <remap from="state_ekf" to="void"/>
-  <remap from="visualize_pose_ekf" to="void"/>
-  <remap from="featList_meas" to="void"/>
-  <remap from="map" to="void"/>
+  <remap from="feature_map" to="void0"/>
+  <remap from="FeatureAssociationList" to="void1"/>
+  <remap from="state_ekf" to="void2"/>
+  <remap from="visualize_pose_ekf" to="void3"/>
+  <remap from="featList_meas" to="void4"/>
+  <remap from="map" to="void5"/>
   
   <group>
     <!--- Run IPA localization -->
@@ -36,7 +36,7 @@
     <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
     
     <!-- start kalman filter for localization -->
-    <node name="ipa_loc_feature_fusion_ekf_node" pkg="ipa_loc_feature_fusion_ekf" type="ipa_loc_feature_fusion_ekf_node">
+    <node name="gt_ipa_loc_feature_fusion_ekf_node" pkg="ipa_loc_feature_fusion_ekf" type="ipa_loc_feature_fusion_ekf_node">
       <remap from="/FeatureAssociations" to="/FeatureAssociationList" />
     </node> 
     
