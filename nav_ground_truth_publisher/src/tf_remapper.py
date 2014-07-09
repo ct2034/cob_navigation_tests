@@ -6,6 +6,8 @@ from tf2_msgs.msg import TFMessage
 from geometry_msgs.msg import TransformStamped
 import tf
 
+# the genral ide on this is based on: http://answers.ros.org/question/175013/removingdeletingignoring-odom-tf-data/?answer=175018#post-id-175018
+
 class TfRemapper:
         
         
