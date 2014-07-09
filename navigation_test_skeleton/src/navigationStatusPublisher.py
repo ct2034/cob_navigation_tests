@@ -70,4 +70,5 @@ class NavigationStatusPublisher( object ):
         msg.repository      = self._setting[ 'repository' ]
         msg.cameraTopics    = self._setting[ 'cameraTopics' ]
         msg.collisionsTopic = self._setting[ 'collisionsTopic' ]
+        msg.sim             = self._setting[ 'sim' ]
         return msg

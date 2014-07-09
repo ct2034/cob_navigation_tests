@@ -4,3 +4,4 @@ string   scenario
 string   repository
 string[] cameraTopics
 string   collisionsTopic
+string   sim
