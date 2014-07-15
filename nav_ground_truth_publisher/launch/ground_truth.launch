@@ -8,7 +8,7 @@
   <arg name="nogrid" default="false"/>
   <arg name="sensor_config" default="$(find ipa_navigation_config)/configs/raw3-1-full.yaml" />
   
-  <node name="tf_remapper" pkg="nav_ground_truth_publisher" type="tf_remapper.py" output="screen" />
+  <node name="tf_repub" pkg="nav_ground_truth_publisher" type="tf_repub.py" output="screen" />
   
   <remap from="tf" to="gt_tf"/>
   
@@ -19,26 +19,53 @@
   <remap from="featList_meas" to="void4"/>
   <remap from="map" to="void5"/>
   
-  <group>
-    <!--- Run IPA localization -->
-    <!--include file="$(find ipa_navigation_bringup)/launch/ipa_loc_ekf.xml" >
-      <arg name="robot" value="$(arg robot)" />
-      <arg name="robot_env" value="$(arg robot_env)" />
-      <arg name="map" value="$(arg map)" />
-      <arg name="slam" value="$(arg slam)" />
-      <arg name="imu" value="$(arg imu)" />
-      <arg name="rfid" value="$(arg rfid)" />
-      <arg name="nogrid" value="$(arg nogrid)" />
-      <arg name="sensor_config" value="$(arg sensor_config)" /> 
-    </include-->
+  <!-- load and test IPA navigation config file -->
+  <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
     
-    <!-- load and test IPA navigation config file -->
-    <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
-    
-    <!-- start kalman filter for localization -->
-    <node name="gt_ipa_loc_feature_fusion_ekf_node" pkg="ipa_loc_feature_fusion_ekf" type="ipa_loc_feature_fusion_ekf_node">
-      <remap from="/FeatureAssociations" to="/FeatureAssociationList" />
-    </node> 
-    
-  </group>
+
+  <!-- start scan_unifier -->
+  <include file="$(find cob_navigation_global)/launch/scan_unifier_node.xml">
+    <arg name="robot" value="$(arg robot)" />
+  </include>
+
+	<!-- start amcl -->
+	<node pkg="amcl" type="amcl" name="amcl">
+		<remap from="scan" to="scan_unified" />
+		<param name="odom_model_type" value="omni"/>
+		<param name="transform_tolerance" value="0.2" />
+		<param name="gui_publish_rate" value="-1.0"/>
+		<param name="laser_max_beams" value="30"/>
+		<param name="laser_max_range" value="29.5"/>
+		<param name="min_particles" value="100"/>
+		<param name="max_particles" value="5000"/>
+		<param name="update_min_d" value="0.2"/>
+		<!--param name="update_min_a" value="1.0"/-->
+		<param name="kld_err" value="0.01"/>
+		<param name="kld_z" value="0.99"/>
+		<param name="odom_alpha1" value="0.2"/>
+		<param name="odom_alpha2" value="0.2"/>
+		<!-- translation std dev, m -->
+		<param name="odom_alpha3" value="0.2"/>
+		<param name="odom_alpha4" value="0.2"/>
+		<param name="odom_alpha5" value="0.2"/>
+		<param name="laser_z_hit" value="0.95"/>
+		<param name="laser_z_short" value="0.1"/>
+		<param name="laser_z_max" value="0.05"/>
+		<param name="laser_z_rand" value="0.05"/>
+		<param name="laser_sigma_hit" value="0.2"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_model_type" value="likelihood_field"/>
+		<!-- <param name="laser_model_type" value="beam"/> -->
+		<param name="laser_likelihood_max_dist" value="2.0"/>
+		<param name="update_min_d" value="0.2"/>
+		<param name="update_min_a" value="0.5"/>
+		<param name="odom_frame_id" value="/odom_combined"/>
+		<param name="base_frame_id" value="/base_footprint"/>
+		<param name="global_frame_id" value="/map"/>
+		<param name="resample_interval" value="2"/>
+		<param name="transform_tolerance" value="0.1"/>
+		<param name="recovery_alpha_slow" value="0.0"/>
+		<param name="recovery_alpha_fast" value="0.0"/>
+	</node>
+
 </launch>
