@@ -191,6 +191,10 @@ class BagAnalyzer( object ):
         print 'Initializing Analyzer'
         self._filename                = filename
         self._metricsObserver         = MetricsObserverTF()
+        self._tfDiffObserver          = TFDiffObserver(
+                '/gazebo_gt', '/base_link', numPoints=300, jumpThreshhold=threshhold )
+        self._tfPointsObserver        = TFPointsObserver(
+                [ '/gazebo_gt', '/base_link' ], numPoints=100 )
         self._stateEkfObserver        = StateEkfObserver( '/state_ekf', numPoints=100  )
         self._metricsObserver.dT      = 0
         self._duration                = 'N/A'
@@ -228,6 +232,8 @@ class BagAnalyzer( object ):
         print 'Starting Analyzer'
         self._active = True
         self._metricsObserver.start()
+        self._tfDiffObserver.start()
+        self._tfPointsObserver.start()
         self._stateEkfObserver.start()
         self._startTime = None
         self._localtime = None
@@ -292,22 +298,9 @@ class BagAnalyzer( object ):
         self._setting[ 'scenario' ]        = msg.setting.scenario
         self._setting[ 'repository' ]      = msg.setting.repository
         self._setting[ 'collisionsTopic' ] = msg.setting.collisionsTopic
-        self._setting[ 'sim' ]             = msg.setting.sim
 
         self._setupCollisionsListener()
-        
-        if "true" in self._setting[ 'sim' ].lower():        
-            print( '===>> THIS WAS A SIMULATION, RIGTH? <<=== self._setting[ sim ] = %s' % self._setting[ 'sim' ] )
-            self._tfDiffObserver          = TFDiffObserver('/gazebo_gt', '/base_link', numPoints=300, jumpThreshhold=threshhold )
-            self._tfPointsObserver        = TFPointsObserver([ '/gazebo_gt', '/base_link' ], numPoints=100 )
-        else:
-            print( '===>> THIS WAS A REAL ROBOT, RIGTH? <<=== self._setting[ sim ] = %s' % self._setting[ 'sim' ] )
-            self._tfDiffObserver          = TFDiffObserver('/gt_base_link', '/base_link', numPoints=300, jumpThreshhold=threshhold )
-            self._tfPointsObserver        = TFPointsObserver([ '/gt_base_link', '/base_link' ], numPoints=100 )
-        
-        self._tfDiffObserver.start()
-        self._tfPointsObserver.start()
-        
+    
         # first error wins
         if msg.error and not self._error:
             self._error = msg.error
