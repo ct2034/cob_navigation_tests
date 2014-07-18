@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="videoConfig" />
+    <arg name="videoConfig" default="$HOME"/>
     <arg name="filepath" />
     <arg name="videofilepath" />
     <arg name="speed"      default="4" />
