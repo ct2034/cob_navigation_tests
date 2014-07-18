@@ -22,6 +22,7 @@ class TFDiffObserver( Thread ):
         self._means = [] # mean values for        - " -
         self._numPoints = numPoints
         self._previousDelta = []
+        self._previousTime = 0
         self._initialStep = True
         self._currentMaxJump = 0.
         self._jumpThreshhold = jumpThreshhold
@@ -91,8 +92,9 @@ class TFDiffObserver( Thread ):
         
     def _checkJump( self, timestamp, x, y, phi):
         newdelta = numpy.array([x, y])
+        newtime = timestamp
         if not self._initialStep:
-            dist = numpy.linalg.norm(newdelta-self._previousDelta)
+            dist = numpy.linalg.norm(newdelta-self._previousDelta) / (newtime-self._previousTime)
             if dist > self._currentMaxJump:
                 self._currentMaxJump = dist
                 #print "New currentMaxJump: ", dist
