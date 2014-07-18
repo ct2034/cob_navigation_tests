@@ -22,16 +22,16 @@ class Worker( object ):
     
         self.bagInfo = bagInfo
         self._analyzer = None
-        self._videoCreator = None
+        #self._videoCreator = None
 
     def start( self, speed=1 ):
         filename = self.bagInfo.filename
         self._analyzer = BagAnalyzer( filename, threshhold )
         self._analyzer.start()
         
-        self._videoCreator = VideoCreator(videofilepath, speed)
-        if self._videoCreator.hasFrameFiles(): # check for existing framefiles
-            self._videoCreator.deleteFrameFiles() # delete them
+        #self._videoCreator = VideoCreator(videofilepath, speed)
+        #if self._videoCreator.hasFrameFiles(): # check for existing framefiles
+        #    self._videoCreator.deleteFrameFiles() # delete them
         # now replayer can be started as it leads to the creation of framefiles
         
         player   = BagReplayer( self.bagInfo.filepath )
@@ -39,9 +39,9 @@ class Worker( object ):
             player.play( speed ) # blocking -> wait for it ...
             
             ## create the video
-            self._videoCreator.createVideo( self.bagInfo.rawFilename, speed )
-            if self._videoCreator.hasFrameFiles(): # check for existing framefiles
-                self._videoCreator.deleteFrameFiles() # delete them
+            #self._videoCreator.createVideo( self.bagInfo.rawFilename, speed )
+            #if self._videoCreator.hasFrameFiles(): # check for existing framefiles
+            #    self._videoCreator.deleteFrameFiles() # delete them
                 
             self._analyzer.stop()
             print '"%s" analyzed' % self.bagInfo.filepath
