@@ -105,11 +105,17 @@ class record_topic():
     
     def record(self):
         if(self.msg!=None):
+            # Saving data beforehand
+            sv_msg = self.msg   
+            sv_topic_name = self.topic_name
+            # Then evaluating lock
             if not global_lock.locked:
                 try:
                     if(global_lock.active_bag):
-                        self.lock()
-                        self.bagfile.write(self.topic_name, self.msg)
-                        self.unlock()
+                        # eval lock again    
+                        if not global_lock.locked:   
+                            global_lock.locked = True
+                            self.bagfile.write(sv_topic_name, sv_msg)
+                            global_lock.locked = False
                 except KeyError, e:
                     rospy.loginfo(self.msg)
