@@ -3,7 +3,7 @@
     <arg name="videoConfig" />
     <arg name="filepath" />
     <arg name="videofilepath" />
-    <arg name="speed"      default="16" />
+    <arg name="speed"      default="4" />
     <arg name="repository" default="fromBagfile" />
 
     <node name="extract" pkg="image_view" type="extract_images" output="screen" respawn="false" cwd="ROS_HOME">

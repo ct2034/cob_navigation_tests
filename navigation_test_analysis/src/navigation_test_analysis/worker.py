@@ -170,11 +170,11 @@ class BagReplayer( object ):
         stdout, stderr = p.communicate()
         print stderr
 
-        if stderr.find( 'invalid TCPROS header' ) >= 0:
-            raise BagReplayer.TCPROSHeaderError()
+        #if stderr.find( 'invalid TCPROS header' ) >= 0:
+        #    raise BagReplayer.TCPROSHeaderError()
 
-        if stderr.find( 'Expected INDEX_DATA record' ) >= 0:
-            raise BagReplayer.INDEX_DATA_Expected()
+        #if stderr.find( 'Expected INDEX_DATA record' ) >= 0:
+        #    raise BagReplayer.INDEX_DATA_Expected()
 
     def _assertFileExists( self ):
         if not os.path.isfile( self._filepath ):
@@ -253,7 +253,7 @@ class BagAnalyzer( object ):
             subscriber.unregister()
 
     def serialize( self ):
-        self._assertNoUnrecoverableErrorOccured()
+        #self._assertNoUnrecoverableErrorOccured()
         data = self._metricsObserver.serialize()
         data[ 'error'              ] = self._error
         data[ 'duration'           ] = self._duration

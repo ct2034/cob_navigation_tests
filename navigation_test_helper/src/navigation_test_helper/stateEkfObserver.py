@@ -60,9 +60,7 @@ class StateEkfObserver( Thread ):
         self.initialize()
         while self.isActive():
             timestamp = rospy.Time.now().to_sec()
-            dPos, dQuat = self._tfListener.lookupTransform(
-                self._topicNameA, self._topicNameB, rospy.Time( 0 )) # <- TF listenter is setup here
-            self._storeDelta( timestamp, dPos, dQuat )
+            self._thinPoints()
             time.sleep( self._dT )
 
     def _thinPoints( self ):

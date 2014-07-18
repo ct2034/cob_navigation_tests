@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="bagPath" />
+    <arg name="bagPath" default="$(env BAG_PATH)"/>
     <arg name="videoPath" />
     <arg name="speed" default="1" />
     <arg name="videoConfig" default="$( find navigation_test_analysis )/videoConfigExample.yaml" />
