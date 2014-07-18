@@ -21,6 +21,7 @@ def setupRobot( robotConfig, req ):
     #    for key, value in config.items():
     #        rospy.loginfo( 'Moving %s to %s' % ( key, value ))
     #        scriptServer.move( key, value, blocking=True )
+    print "robotConfig: " + robotConfig
     for key, value in robotConfig.items():
         rospy.loginfo( 'Moving %s to %s' % ( key, value ))
         scriptServer.move( key, value, blocking=True )
@@ -30,5 +31,8 @@ if __name__=='__main__':
     rospy.init_node( 'cob_prepare_robot' )
     serviceName = rospy.get_param( 'setupRobotService' )
     robotConfig = rospy.get_param( 'robotConfig' )
-    setupRobotService( serviceName, robotConfig )
+    print "serviceName: " + serviceName
+    print "robotConfig: " + robotConfig
+    if "/" in serviceName: 
+        setupRobotService( serviceName, robotConfig )
     rospy.spin()
