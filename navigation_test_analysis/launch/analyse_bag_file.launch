@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="videoConfig" default="$HOME"/>
+    <arg name="videoConfig"/>
     <arg name="filepath" />
-    <arg name="videofilepath" />
+    <arg name="videofilepath" default="$HOME"/>
     <arg name="speed"      default="4" />
     <arg name="repository" default="fromBagfile" />
 
