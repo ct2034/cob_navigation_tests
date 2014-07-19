@@ -28,7 +28,7 @@ class SimpleViewer( object ):
     
     if ".git" in ll_out: # Repository exists
       print "Pulling changes from " + self.reponame
-      print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git pull origin " + branch)
+      #print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git pull origin " + branch)
     elif "No such" in ll_out: # Folder doesn't exist
       print "Cloning " + self.reponame
       print commands.getoutput("cd " + self.tmpdir + "; git clone " + sshrepo)
@@ -80,14 +80,13 @@ class SimpleViewer( object ):
               print str(i) + ": " + test
               i += 1
               
-              all_test.append(test)
+              all_tests.append(test)
         
       inp = "N"
       while inp not in range(1, i):
         inp = input("please enter a number >")
-        
-                
-      return
+                        
+      return this_path + "/" + nav + "/" + rob + "/" + scen + "/" + tests[inp-1]
           
     
     
