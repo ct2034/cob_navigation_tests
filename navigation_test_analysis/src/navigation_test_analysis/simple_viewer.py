@@ -87,27 +87,20 @@ class SimpleViewer( object ):
           else: #no wildcard
             scens = []
             scens.append(self.scene)
-            
-          for scen in scens:
-          
+          for scen in scens:          
             tests = string.split(commands.getoutput("ls " + this_path + "/" + nav + "/" + rob + "/" + scen), "\n")
-            
             if not ("No such" in tests): 
               print string.join([nav, rob, scen], " ")
-                  
               for test in tests:
                 if re.match("^.+json$", test):
                   print " " + str(i) + ": " + test
                   i += 1
-                  
                   all_tests.append([nav, rob, scen, test])
-      
       if self.automode:
         inp = 0
       else:
         inp = "None"
-      
-      if i > 2:
+       if i > 2:
         while inp not in range(0, i):
           inp = input("please enter a number or 0 for all>")
       elif i is 1:
@@ -116,19 +109,16 @@ class SimpleViewer( object ):
         print ">> No tests matching"
       else:
         raise Exception('Uncovered Event of data in listTests() No 1')
-             
       if inp is 0:
         return all_tests
       elif inp > 0:       
         return this_path + "/" + string.join(all_tests[inp-1], "/")
       else:
         raise Exception('Uncovered Event of data in listTests() No 2')
-   
     else: # unambiguous parameter
       print "Available tests for this combination: "
       this_path = self.path + "/" + self.navigation + "/" + self.robot + "/"  + self.scene
       tests = string.split(commands.getoutput("ls " + this_path), "\n")
-      
       i = 1
       actual_tests = []
       for test in tests:
@@ -136,12 +126,10 @@ class SimpleViewer( object ):
           print " " + str(i) + ": " + test
           actual_tests.append([self.navigation, self.robot, self.scene, test])
           i += 1
-          
       if self.automode:
         inp = 0
       else:
         inp = "None"
-      
       if i > 2:
         while inp not in range(0, i):
           inp = input("please enter a number >")
@@ -158,13 +146,9 @@ class SimpleViewer( object ):
            
   def showSingle(self, single_path):        
     print (">> showing: " + single_path)
-    
     results_file = open(single_path, "r").read()
     data_json = json.loads(results_file)[0]
-    
-    #fig = plt.figure() 
     fig = self.makeFigSingle( data_json)              
-
     plt.show()
     return         
            
@@ -183,12 +167,12 @@ class SimpleViewer( object ):
     
     return              
     
-  def getInfo(self, data_json):
-    return string.join([ data_json['robot'], str(data_json['scenario']), data_json['navigation'], str(data_json['localtimeFormatted']) ], "\n")
+  def getInfo(self, data_json, sep):
+    return string.join([ data_json['robot'], str(data_json['scenario']), data_json['navigation'], str(data_json['localtimeFormatted']) ], sep)
     
     
   def makeFigSingle(self, data_json):
-    info_str = self.getInfo(data_json)
+    info_str = self.getInfo(data_json, " ")
     fig = plt.figure(figsize=(20,10))
     
     ax_points = fig.add_subplot(121)
@@ -200,14 +184,13 @@ class SimpleViewer( object ):
         pl_points[tfframe], = ax_points.plot(points[tfframe][:,1], points[tfframe][:,2])
       ax_points.set_aspect('equal')
       ax_points.legend(pl_points.values(), points.keys(), 'best')
-      ax_points.set_title('Covered Route'+info_str)
+      ax_points.set_title('Covered Route - '+info_str)
       ax_points.set_xlabel('x [m]')
       ax_points.set_ylabel('y [m]')
     else:
       ax_points.text( 0.5, 0.5, 'No Points Data', verticalalignment='center', horizontalalignment='center')
       ax_points.axis('off')
-    
-    
+     
     ax_deltas = fig.add_subplot(222)  
     if ("deltas" in data_json.keys()) and (data_json['deltas']): # points in the dict    
       deltas = {}
@@ -217,13 +200,12 @@ class SimpleViewer( object ):
       pl_y, = ax_deltas.plot(delta_arr[:,0], delta_arr[:,2])
       pl_p, = ax_deltas.plot(delta_arr[:,0], delta_arr[:,3])
       ax_deltas.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
-      ax_deltas.set_title('Deltas'+info_str)
+      ax_deltas.set_title('Deltas - '+info_str)
       ax_deltas.set_xlabel('Time [ms]')
       ax_deltas.set_ylabel('Deviation [m, rad]')
     else:
       ax_deltas.text( 0.5, 0.5, 'No Delta Data', verticalalignment='center', horizontalalignment='center')
       ax_deltas.axis('off')
-     
      
     ax_covars = fig.add_subplot(224)
     if ("covariances" in data_json.keys()) and (data_json['covariances']): # points in the dict
@@ -234,9 +216,9 @@ class SimpleViewer( object ):
       pl_y, = ax_covars.plot(covars_arr[:,0], covars_arr[:,2])
       pl_p, = ax_covars.plot(covars_arr[:,0], covars_arr[:,3])
       ax_covars.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
-      ax_covars.set_title('Covariance'+info_str)
+      ax_covars.set_title('Covariance - '+info_str)
       ax_covars.set_xlabel('Time [ms]')
-      ax_covars.set_ylabel('Deviation [m, rad]')
+      ax_covars.set_ylabel('Covariance [m, rad]')
       ax_covars.autoscale(enable=True, axis='both', tight=None)
     else:
       ax_covars.text( 0.5, 0.5, 'No Covariance Data', verticalalignment='center', horizontalalignment='center')
@@ -258,7 +240,7 @@ class SimpleViewer( object ):
       fname = self.path + "/" + string.join(path, "/")
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
-      info_str = self.getInfo(data_json)
+      info_str = self.getInfo(data_json, "\n")
       
       print data_json.keys()
       
@@ -281,7 +263,7 @@ class SimpleViewer( object ):
       fname = self.path + "/" + string.join(path, "/")
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
-      info_str = self.getInfo(data_json)
+      info_str = self.getInfo(data_json, "\n")
       
       print data_json.keys()
       
@@ -302,7 +284,7 @@ class SimpleViewer( object ):
     
 
   def saveOrComp(self, paths):
-  
+    
     if self.automode:
       inp = 0
     else:
@@ -323,6 +305,7 @@ class SimpleViewer( object ):
   def saveAll(self, paths):
     for path in paths:
       fname = self.path + "/" + string.join(path, "/")
+      self.saveSingle(fname)
       
       
   def writeReadme(self, paths):
