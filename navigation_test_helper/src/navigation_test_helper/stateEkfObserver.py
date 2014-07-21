@@ -74,9 +74,9 @@ class StateEkfObserver( Thread ):
             for i in range(3): # for x, y, phi (0 is timestamp)
                 self._stds.append( numpy.std( covar_array[:,i+1].astype(float) ) )
                 self._means.append( numpy.mean( covar_array[:,i+1].astype(float) ) )
-            print "*********** COVAR STATISTICS ****************"
-            print "Stds: " , self._stds
-            print "Means: " , self._means
+            #print "*********** COVAR STATISTICS ****************"
+            #print "Stds: " , self._stds
+            #print "Means: " , self._means
 
     def isActive( self ):
         with self._lock:

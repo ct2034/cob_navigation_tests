@@ -26,7 +26,7 @@ class SimpleViewer( object ):
     ll_out = commands.getoutput("ls -a " + self.tmpdir + "/" + self.reponame);
     if ".git" in ll_out: # Repository exists
       print "Pulling changes from " + self.reponame
-      #print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git pull origin " + branch)
+      print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git pull origin " + branch)
     elif "No such" in ll_out: # Folder doesn't exist
       print "Cloning " + self.reponame
       print commands.getoutput("cd " + self.tmpdir + "; git clone " + sshrepo)
@@ -145,7 +145,7 @@ class SimpleViewer( object ):
     return              
     
   def getInfo(self, data_json, sep):
-    return string.join([ data_json['robot'], str(data_json['scenario']), data_json['navigation'], str(data_json['localtimeFormatted']) ], sep)
+    return string.join([ data_json['navigation'], data_json['robot'], str(data_json['scenario']), str(data_json['localtimeFormatted']) ], sep)
     
     
   def makeFigSingle(self, data_json):
@@ -202,11 +202,6 @@ class SimpleViewer( object ):
       ax_covars.set_title('Covariance - '+info_str)
       ax_covars.set_xlabel('Time [s]')
       ax_covars.set_ylabel('Covariance [m, rad]')
-      
-      print covars_arr
-      print np.min(covars_arr[:,1:3])
-      print np.max(covars_arr[:,1:3])
-      
       ax_covars.set_ylim(
         ( np.min(covars_arr[:,1:3])-.003 ), 
         ( np.max(covars_arr[:,1:3])+.004 ) 
@@ -223,37 +218,64 @@ class SimpleViewer( object ):
     bar_width = 0.2
     colors = ['r', 'b', 'g']
     infos = []
-    i=0
+    i = 0
     for path in paths:
       fname = self.path + "/" + string.join(path, "/")
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
       info_str = self.getInfo(data_json, "\n")
+      # ---------
       if ("deltas_means" in data_json.keys()) and data_json['deltas_means']:
         for co in range(0, 3):
           ax_deltas.bar( i + co*bar_width, np.abs(data_json['deltas_means'][co]), bar_width, yerr=data_json['deltas_stds'][co], color=colors[co] )
-          infos.append(info_str)
+        infos.append(info_str)
         i += 1
-      ticksar = np.array(range(0, i), dtype = 'float')+bar_width
+      ticksar = np.array(range(0, i), dtype = 'float')+(bar_width*1.5)
       plt.xticks(ticksar, infos, rotation=90, size='small')
       ax_deltas.set_title('Deltas')
+    infos = []
+    i = 0
+    # ---------
     fig_covar = plt.figure(figsize=(10,10))  
     ax_covar = fig_covar.add_subplot(111)
-    infos = []
-    i=0
     for path in paths:
       fname = self.path + "/" + string.join(path, "/")
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
       info_str = self.getInfo(data_json, "\n")
+      # ---------
       if ("covariance_means" in data_json.keys()) and data_json['covariance_means']:
         for co in range(0, 3):
           ax_covar.bar( i + co*bar_width, np.abs(data_json['covariance_means'][co]), bar_width, yerr=data_json['covariance_stds'][co], color=colors[co] )
-          infos.append(info_str)
+        infos.append(info_str)
         i += 1
-      ticksar = np.array(range(0, i), dtype = 'float')+bar_width
+      ticksar = np.array(range(0, i), dtype = 'float')+(bar_width*1.5)
       plt.xticks(ticksar, infos, rotation=90, size='small')
-      ax_covar.set_title('Covariance')  
+      ax_covar.set_title('Covariance') 
+    infos = []
+    i = 0
+    # ---------
+    fig_jumps = plt.figure(figsize=(10,10))  
+    ax_jumps_n = fig_jumps.add_subplot(121)
+    ax_jumps_m = fig_jumps.add_subplot(122)
+    for path in paths:
+      fname = self.path + "/" + string.join(path, "/")
+      f = open(fname, "r").read()
+      data_json = json.loads(f)[0]
+      info_str = self.getInfo(data_json, "\n")
+      # --------- 
+      if ("delta_nrof_jumps" in data_json.keys()) and data_json['delta_nrof_jumps']:
+        co = 0
+        ax_jumps_n.bar( i + co*bar_width, data_json['delta_nrof_jumps'][1], bar_width, color=colors[co] )
+        co = 1
+        ax_jumps_m.bar( i + co*bar_width, data_json['delta_max_jump'], bar_width, color=colors[co] )
+        infos.append(info_str)
+        i += 1
+      ticksar = np.array(range(0, i), dtype = 'float')+(bar_width*0.5)
+      plt.xticks(ticksar, infos, rotation=90, size='small')
+      ax_jumps_n.set_title('Number of Jumps') 
+      ax_jumps_m.set_title('Maximal Jump') 
+      ax_jumps_m.set_ylabel('Jump \'Speed\' [m/s]')
     plt.show()
      
     

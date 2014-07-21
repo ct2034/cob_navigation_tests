@@ -86,9 +86,9 @@ class TFDiffObserver( Thread ):
         for i in range(3): # for x, y, phi (0 is timestamp)
             self._stds.append( numpy.std( delta_array[:,i+1].astype(float) ) )
             self._means.append( numpy.mean( delta_array[:,i+1].astype(float) ) )
-        print "*********** DELTA STATISTICS ****************"
-        print "Stds: " , self._stds
-        print "Means: " , self._means
+        #print "*********** DELTA STATISTICS ****************"
+        #print "Stds: " , self._stds
+        #print "Means: " , self._means
         
     def _checkJump( self, timestamp, x, y, phi):
         newdelta = numpy.array([x, y], dtype=numpy.float64)
@@ -133,7 +133,7 @@ class TFDiffObserver( Thread ):
         return self._jumpLocations[:]
         
     def serializeNumJumps( self ):
-        return self._numberAboveThreshhold
+        return [self._jumpThreshhold, self._numberAboveThreshhold]
         
     def serializeMaxJump( self ):
         return self._currentMaxJump

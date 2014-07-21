@@ -16,6 +16,6 @@
         <param name="~videofilepath"   value="$( arg videofilepath )" />
         <param name="~speed"      value="$( arg speed )" />
         <param name="~repository" value="$( arg repository )" />
-        <param name="~threshhold" value="0.15" />
+        <param name="~threshhold" value="0.4" />
     </node>
 </launch>
