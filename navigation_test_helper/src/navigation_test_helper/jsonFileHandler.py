@@ -8,13 +8,13 @@ class JsonFileHandler( object ):
     def write( self, data ):
         content = [ data ]
         with open( self._filename, 'w' ) as f:
-            f.write( json.dumps( content ))
+            f.write( json.dumps( content, sort_keys=True, indent=4, separators=(',', ': ') ))
 
     def append( self, data ):
         content = self.read()
         content.append( data )
         with open( self._filename, 'w' ) as f:
-            f.write( json.dumps( content ))
+            f.write( json.dumps( content, sort_keys=True, indent=4, separators=(',', ': ') ))
 
     def read( self ):
         if os.path.isfile( self._filename ):
