@@ -296,7 +296,7 @@ class BagAnalyzer( object ):
         self._setting[ 'robot' ]           = msg.setting.robot
         self._setting[ 'navigation' ]      = msg.setting.navigation
         self._setting[ 'scenario' ]        = msg.setting.scenario
-        self._setting[ 'repository' ]      = msg.setting.repository
+        self._setting[ 'repository' ]      = "git@github.com:ct2034/cob_navigation_tests_results" #msg.setting.repository
         self._setting[ 'collisionsTopic' ] = msg.setting.collisionsTopic
 
         self._setupCollisionsListener()

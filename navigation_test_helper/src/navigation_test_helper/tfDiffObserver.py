@@ -91,13 +91,15 @@ class TFDiffObserver( Thread ):
         print "Means: " , self._means
         
     def _checkJump( self, timestamp, x, y, phi):
-        newdelta = numpy.array([x, y])
+        newdelta = numpy.array([x, y], dtype=numpy.float64)
         newtime = timestamp
         if not self._initialStep:
             dist = numpy.linalg.norm(newdelta-self._previousDelta) / (newtime-self._previousTime)
             if dist > self._currentMaxJump:
                 self._currentMaxJump = dist
-                #print "New currentMaxJump: ", dist
+                #print "New currentMaxJump: %e" % dist
+                #print "numpy.linalg.norm(newdelta-self._previousDelta): %e" % ( numpy.linalg.norm(newdelta-self._previousDelta) )
+                #print "newtime-self._previousTime: %e" % ( self._previousTime-newtime ) 
             if dist > self._jumpThreshhold: 
                 self._numberAboveThreshhold+=1
                 #print "New numberAboveThreshhold: ", self._numberAboveThreshhold, " with dist: ", dist
@@ -105,7 +107,8 @@ class TFDiffObserver( Thread ):
                 timestamp = rospy.Time.now().to_sec()
                 dEuler = tf.transformations.euler_from_quaternion( dQuat )
                 self._jumpLocations.append( ( timestamp, dPos[ 0 ], dPos[ 1 ], dEuler[ 2 ]))
-                #print "at location: ", dPos[ 0 ], dPos[ 1 ], dEuler[ 2 ]        
+                #print "at location: ", dPos[ 0 ], dPos[ 1 ], dEuler[ 2 ]    
+            self._previousTime = newtime    
         self._initialStep = False
         self._previousDelta = newdelta
                         

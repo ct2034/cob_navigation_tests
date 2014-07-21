@@ -149,6 +149,7 @@ class SimpleViewer( object ):
     
     
   def makeFigSingle(self, data_json):
+    # print data_json.keys()
     info_str = self.getInfo(data_json, " ")
     fig = plt.figure(figsize=(20,10))
     ax_points = fig.add_subplot(121)
@@ -166,8 +167,12 @@ class SimpleViewer( object ):
     else:
       ax_points.text( 0.5, 0.5, 'No Points Data', verticalalignment='center', horizontalalignment='center')
       ax_points.axis('off')
+    if ('delta_jumps' in data_json.keys()) and (data_json['delta_jumps']): # jumps in the dict
+      points["delta_jumps"] = np.array(data_json["delta_jumps"])
+      pl_points["delta_jumps"], = ax_points.plot(points["delta_jumps"][:,1], points["delta_jumps"][:,2], 'mo')
+      ax_points.legend(pl_points.values(), points.keys(), 'best')
     ax_deltas = fig.add_subplot(222)  
-    if ("deltas" in data_json.keys()) and (data_json['deltas']): # points in the dict    
+    if ("deltas" in data_json.keys()) and (data_json['deltas']): # deltas in the dict    
       deltas = {}
       pl_deltas = {}
       delta_arr = np.array(data_json['deltas'])
@@ -176,11 +181,15 @@ class SimpleViewer( object ):
       pl_p, = ax_deltas.plot(delta_arr[:,0], delta_arr[:,3])
       ax_deltas.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
       ax_deltas.set_title('Deltas - '+info_str)
-      ax_deltas.set_xlabel('Time [ms]')
+      ax_deltas.set_xlabel('Time [s]')
       ax_deltas.set_ylabel('Deviation [m, rad]')
     else:
       ax_deltas.text( 0.5, 0.5, 'No Delta Data', verticalalignment='center', horizontalalignment='center')
       ax_deltas.axis('off')
+    if ('delta_jumps' in data_json.keys()) and (data_json['delta_jumps']): # jumps in the dict
+      jumps_arr = np.array(data_json["delta_jumps"])
+      pl_jumps, = ax_deltas.plot(jumps_arr[:,0], np.zeros(len(jumps_arr[:,0])), 'mo')
+      ax_deltas.legend((pl_x, pl_y, pl_p, pl_jumps), ('x', 'y', 'phi', 'jumps'), 'best')
     ax_covars = fig.add_subplot(224)
     if ("covariances" in data_json.keys()) and (data_json['covariances']): # points in the dict
       covars = {}
@@ -191,9 +200,17 @@ class SimpleViewer( object ):
       pl_p, = ax_covars.plot(covars_arr[:,0], covars_arr[:,3])
       ax_covars.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
       ax_covars.set_title('Covariance - '+info_str)
-      ax_covars.set_xlabel('Time [ms]')
+      ax_covars.set_xlabel('Time [s]')
       ax_covars.set_ylabel('Covariance [m, rad]')
-      ax_covars.autoscale(enable=True, axis='both', tight=None)
+      
+      print covars_arr
+      print np.min(covars_arr[:,1:3])
+      print np.max(covars_arr[:,1:3])
+      
+      ax_covars.set_ylim(
+        ( np.min(covars_arr[:,1:3])-.003 ), 
+        ( np.max(covars_arr[:,1:3])+.004 ) 
+      )
     else:
       ax_covars.text( 0.5, 0.5, 'No Covariance Data', verticalalignment='center', horizontalalignment='center')
       ax_covars.axis('off') 
