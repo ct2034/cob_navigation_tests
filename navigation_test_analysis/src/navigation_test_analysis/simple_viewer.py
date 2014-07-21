@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import json, os, sys, commands, re, string
-from time import gmtime, strftime
+from time import localtime, strftime
 import pylab
 import matplotlib.pyplot as plt
 import numpy as np
@@ -269,6 +269,9 @@ class SimpleViewer( object ):
     print commands.getoutput("rm " + fname)
     f = open(fname, 'w')
     f.write('# Test Results overview\n')
+    f.write('This Overviwe is created by this script:\n')
+    f.write('https://github.com/ct2034/cob_navigation_tests/blob/hydro_dev/navigation_test_analysis/src/navigation_test_analysis/simple_viewer.py <br>\n')
+    f.write('_Call it locally for options to compare test data._\n')
     old = "old"
     for path in paths:
       jaml = "/" + string.join(path, "/")
@@ -282,7 +285,7 @@ class SimpleViewer( object ):
     
     
   def commit(self):
-    print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git add . ; git commit -m\'automatic image update " + strftime("%a, %d %b %Y %X +0000", gmtime()) + "\';  git push origin " + self.branch)
+    print commands.getoutput("cd " + self.tmpdir + "/" + self.reponame + "; git add . ; git commit -m\'automatic image update " + strftime("%a, %d %b %Y %X +0000", localtime()) + "\';  git push origin " + self.branch)
     
       
 if __name__ == '__main__':
