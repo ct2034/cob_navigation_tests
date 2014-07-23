@@ -168,7 +168,8 @@ class SimpleViewer( object ):
       ax_points.text( 0.5, 0.5, 'No Points Data', verticalalignment='center', horizontalalignment='center')
       ax_points.axis('off')
     if ('delta_jumps' in data_json.keys()) and (data_json['delta_jumps']): # jumps in the dict
-      points["delta_jumps"] = np.array(data_json["delta_jumps"])
+      jumps_name = "delta_jumps (trhd: " + str(data_json['delta_nrof_jumps'][0]) + " m)"
+      points[jumps_name] = np.array(data_json["delta_jumps"])
       pl_points["delta_jumps"], = ax_points.plot(points["delta_jumps"][:,1], points["delta_jumps"][:,2], 'mo')
       ax_points.legend(pl_points.values(), points.keys(), 'best')
     ax_deltas = fig.add_subplot(222)  
