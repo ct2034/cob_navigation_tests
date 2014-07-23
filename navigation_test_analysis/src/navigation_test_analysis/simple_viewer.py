@@ -168,7 +168,7 @@ class SimpleViewer( object ):
       ax_points.text( 0.5, 0.5, 'No Points Data', verticalalignment='center', horizontalalignment='center')
       ax_points.axis('off')
     if ('delta_jumps' in data_json.keys()) and (data_json['delta_jumps']): # jumps in the dict
-      if data_json['delta_nrof_jumps'][0]:
+      if isinstance(data_json['delta_nrof_jumps'], list):
         jumps_name = "delta_jumps (trhd: " + str(data_json['delta_nrof_jumps'][0]) + " m)"
       else:
         jumps_name = "delta_jumps"
