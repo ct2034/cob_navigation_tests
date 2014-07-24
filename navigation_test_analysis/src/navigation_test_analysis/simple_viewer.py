@@ -173,7 +173,7 @@ class SimpleViewer( object ):
       else:
         jumps_name = "delta_jumps"
       points[jumps_name] = np.array(data_json["delta_jumps"])
-      pl_points["delta_jumps"], = ax_points.plot(points["delta_jumps"][:,1], points["delta_jumps"][:,2], 'mo')
+      pl_points[jumps_name], = ax_points.plot(points[jumps_name][:,1], points[jumps_name][:,2], 'mo')
       ax_points.legend(pl_points.values(), points.keys(), 'best')
     ax_deltas = fig.add_subplot(222)  
     if ("deltas" in data_json.keys()) and (data_json['deltas']): # deltas in the dict    
