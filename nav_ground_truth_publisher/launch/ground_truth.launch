@@ -1,4 +1,4 @@
-<launch>
+<launch ns="gt">
   <arg name="robot" default="$(optenv ROBOT !!NO_ROBOT_SET!!)"/>
   <arg name="robot_env" default="$(optenv ROBOT_ENV !!NO_ROBOT_ENV_SET!!)"/>
   <arg name="map" default="$(find cob_default_env_config)/$(arg robot_env)/map.yaml" />
@@ -10,8 +10,18 @@
   
   <node name="tf_repub" pkg="nav_ground_truth_publisher" type="tf_repub.py" output="screen" />
   
-  <!-- load and test IPA navigation config file -->
+  <!-- load IPA navigation config file -->
   <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
+ 
+  <!-- start deadreconong for gt -->
+  <node name="ipa_loc_deadreckoning_gt" pkg="ipa_loc_deadreckoning" type="ipa_loc_deadreckoning" cwd="node" respawn="false" output="screen">
+    <param name="odom_frame" value="odom_gt"/>
+    <param name="base_frame" value="gazebo_gt"/>
+    
+    <remap from="in_odometry" to="/base_controller/odometry"/>
+    <remap from="in_imu" to="/imu"/>
+    <remap from="/odom_combined" to="/odom_gt"/>
+  </node> 
  
   <!-- start scan_unifier -->
   <include file="$(find cob_navigation_global)/launch/scan_unifier_node.xml">

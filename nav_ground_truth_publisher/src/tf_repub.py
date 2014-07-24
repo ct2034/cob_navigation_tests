@@ -32,14 +32,15 @@ class TfRepub:
         
         while not rospy.is_shutdown():
             try:
-                (trans,rot) = self.tf_list.lookupTransform(self.frame_base, self.frame_odom, rospy.Time(0))
+                (trans,rot) = self.tf_list.lookupTransform(self.frame_odom, self.frame_base, rospy.Time(0))
+                print trans[0]
                 
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
-                #print "a tf Exception occured ..."
+                print "a tf Exception occured ..."
                 continue  
                 
             #print "Callback trans[0] : " + str( trans[0] )
-            self.tf_br.sendTransform(trans, rot, rospy.Time.now(), self.frame_gt, self.frame_odom_gt)
+            self.tf_br.sendTransform(trans, rot, rospy.Time.now(), self.frame_odom, self.frame_gt)
             
             rate.sleep()
 
