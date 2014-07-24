@@ -10,19 +10,9 @@
   
   <node name="tf_repub" pkg="nav_ground_truth_publisher" type="tf_repub.py" output="screen" />
   
-  <remap from="tf" to="gt_tf"/>
-  
-  <remap from="feature_map" to="void0"/>
-  <remap from="FeatureAssociationList" to="void1"/>
-  <remap from="state_ekf" to="void2"/>
-  <remap from="visualize_pose_ekf" to="void3"/>
-  <remap from="featList_meas" to="void4"/>
-  <remap from="map" to="void5"/>
-  
   <!-- load and test IPA navigation config file -->
   <rosparam file="$(arg sensor_config)" command="load" ns="localization"/>
-    
-
+ 
   <!-- start scan_unifier -->
   <include file="$(find cob_navigation_global)/launch/scan_unifier_node.xml">
     <arg name="robot" value="$(arg robot)" />
@@ -59,8 +49,8 @@
 		<param name="laser_likelihood_max_dist" value="2.0"/>
 		<param name="update_min_d" value="0.2"/>
 		<param name="update_min_a" value="0.5"/>
-		<param name="odom_frame_id" value="/odom_combined"/>
-		<param name="base_frame_id" value="/base_footprint"/>
+		<param name="odom_frame_id" value="/odom_gt"/>
+		<param name="base_frame_id" value="/gazebo_gt"/>
 		<param name="global_frame_id" value="/map"/>
 		<param name="resample_interval" value="2"/>
 		<param name="transform_tolerance" value="0.1"/>
