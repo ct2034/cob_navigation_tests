@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   tf
   amcl
-  cob_navigation
+  cob_navigation_global
   map_server
 )
 
