@@ -5,6 +5,7 @@ continuous_topics:
     - { topic: /tf,         type: tf/tfMessage }
     - { topic: status,      type: navigation_test_helper/Status }
     - { topic: /state_ekf,  type: geometry_msgs/PoseWithCovarianceStamped }
+    - { topic: /amcl_poses, type: geometry_msgs/PoseWithCovarianceStamped }
 
 ################
 # triggered recording

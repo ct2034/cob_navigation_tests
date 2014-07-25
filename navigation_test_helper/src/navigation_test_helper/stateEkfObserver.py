@@ -10,9 +10,9 @@ import numpy, math
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
 class StateEkfObserver( Thread ):
-    def __init__( self, topicName, numPoints ):
+    def __init__( self, topicNames, numPoints ):
         Thread.__init__( self )
-        self._topicName = topicName
+        self._topicNames = topicNames
         self._tfListener = None
         self._initialized = None
         self._lock = RLock()
@@ -40,17 +40,18 @@ class StateEkfObserver( Thread ):
             if self.isInitialized(): return True
             if not self._tfListener:
                 self._tfListener = tf.TransformListener() # <- TF listenter is initialized here
-            try:
-                rospy.Subscriber("state_ekf", PoseWithCovarianceStamped, self.callback)
-                self._initialized = True
-                return True
-            except tf.Exception,e:
-                print 'stateEkfObserver: Could not get message from %s within timeout %s' % (
-                        self._topicName, timeout )
-                return False
-            except Exception,e:
-                print 'stateEkfObserver: Exception occured: %s' % e
-                return False
+            success = False
+            for topic in self._topicNames:   
+                try:
+                    rospy.Subscriber(topic, PoseWithCovarianceStamped, self.callback)
+                    self._initialized = True
+                    success = True
+                except tf.Exception,e:
+                    print 'stateEkfObserver: Could not get message from %s within timeout %s' % (
+                          str(topic), timeout )
+                except Exception,e:
+                    print 'stateEkfObserver: Exception occured: %s' % e
+        return success
 
     def callback( self, data ):
 		timestamp = rospy.Time.now().to_sec()

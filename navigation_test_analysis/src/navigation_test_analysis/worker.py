@@ -195,7 +195,7 @@ class BagAnalyzer( object ):
                 '/gazebo_gt', '/base_link', numPoints=300, jumpThreshhold=threshhold )
         self._tfPointsObserver        = TFPointsObserver(
                 [ '/gazebo_gt', '/base_link' ], numPoints=100 )
-        self._stateEkfObserver        = StateEkfObserver( '/state_ekf', numPoints=100  )
+        self._stateEkfObserver        = StateEkfObserver( ('/state_ekf', '/amcl_pose'), numPoints=100  )
         self._metricsObserver.dT      = 0
         self._duration                = 'N/A'
         self._active                  = False
