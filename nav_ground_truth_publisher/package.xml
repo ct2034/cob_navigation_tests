@@ -44,13 +44,13 @@
   <build_depend>rospy</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>amcl</build_depend>
-  <build_depend>cob_scan_unifier</build_depend>
+  <build_depend>cob_navigation</build_depend>
   <build_depend>map_server</build_depend>
   <run_depend>ipa_navigation_bringup</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>amcl</run_depend>
-  <run_depend>cob_scan_unifier</run_depend>
+  <run_depend>cob_navigation</run_depend>
   <run_depend>map_server</run_depend>
 
 
