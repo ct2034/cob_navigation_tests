@@ -169,7 +169,7 @@ class SimpleViewer( object ):
       ax_points.axis('off')
     if ('delta_jumps' in data_json.keys()) and (data_json['delta_jumps']): # jumps in the dict
       if isinstance(data_json['delta_nrof_jumps'], list):
-        jumps_name = "delta_jumps (trhd: " + str(data_json['delta_nrof_jumps'][0]) + " m)"
+        jumps_name = "delta_jumps (trhd: " + str(data_json['delta_nrof_jumps'][0]) + " m/s)"
       else:
         jumps_name = "delta_jumps"
       points[jumps_name] = np.array(data_json["delta_jumps"])
