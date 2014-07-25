@@ -8,6 +8,9 @@ find_package(catkin REQUIRED COMPONENTS
   ipa_navigation_bringup
   rospy
   tf
+  amcl
+  cob_scan_unifier
+  map_server
 )
 
 ## System dependencies are found with CMake's conventions
