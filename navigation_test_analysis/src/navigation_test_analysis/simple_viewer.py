@@ -228,14 +228,16 @@ class SimpleViewer( object ):
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
       info_str = self.getInfo(data_json, "\n")
+      pl = []
       # ---------
       if ("deltas_means" in data_json.keys()) and data_json['deltas_means']:
         for co in range(0, 3):
-          ax_deltas.bar( i + co*bar_width, np.abs(data_json['deltas_means'][co]), bar_width, yerr=data_json['deltas_stds'][co], color=colors[co] )
+          pl.append( ax_deltas.bar( i + co*bar_width, np.abs(data_json['deltas_means'][co]), bar_width, yerr=data_json['deltas_stds'][co], color=colors[co] ) )
         infos.append(info_str)
         i += 1
       ticksar = np.array(range(0, i), dtype = 'float')+(bar_width*1.5)
       plt.xticks(ticksar, infos, rotation=90, size='small')
+      ax_deltas.legend(pl, ('x', 'y', 'phi'), 'best')
       ax_deltas.set_title('Deltas')
     infos = []
     i = 0
@@ -247,14 +249,16 @@ class SimpleViewer( object ):
       f = open(fname, "r").read()
       data_json = json.loads(f)[0]
       info_str = self.getInfo(data_json, "\n")
+      pl = []
       # ---------
       if ("covariance_means" in data_json.keys()) and data_json['covariance_means']:
         for co in range(0, 3):
-          ax_covar.bar( i + co*bar_width, np.abs(data_json['covariance_means'][co]), bar_width, yerr=data_json['covariance_stds'][co], color=colors[co] )
+          pl.append( ax_covar.bar( i + co*bar_width, np.abs(data_json['covariance_means'][co]), bar_width, yerr=data_json['covariance_stds'][co], color=colors[co] ) )
         infos.append(info_str)
         i += 1
       ticksar = np.array(range(0, i), dtype = 'float')+(bar_width*1.5)
       plt.xticks(ticksar, infos, rotation=90, size='small')
+      ax_covar.legend(pl, ('x', 'y', 'phi'), 'best')
       ax_covar.set_title('Covariance') 
     infos = []
     i = 0
