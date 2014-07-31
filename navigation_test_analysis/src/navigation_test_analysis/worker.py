@@ -269,20 +269,15 @@ class BagAnalyzer( object ):
             subscriber.unregister()
 
     def serialize( self ):
-        print "======== SERIALIZE!"
         #self._assertNoUnrecoverableErrorOccured()
         data = {}#self._metricsObserver.serialize()
         #data[ 'error'              ] = self._error
         #data[ 'duration'           ] = self._duration
         data[ 'filename'           ] = self._filename
-        print "======== SERIALIZE!"
         data[ 'localtime'          ] = self._localtime
-        print "======== SERIALIZE!"
         #data[ 'collisions'         ] = self._collisions
         data[ 'localtimeFormatted' ] = self._localtimeFormatted()
-        print "======== SERIALIZE!"
         data[ 'deltas'             ] = self._tfDiffObserver.serialize()
-        print "======== SERIALIZE!"
         data[ 'deltas_stds'        ] = self._tfDiffObserver.serializeStds()
         data[ 'deltas_means'       ] = self._tfDiffObserver.serializeMeans()
         data[ 'delta_jumps'        ] = self._tfDiffObserver.serializeJumps()
@@ -360,6 +355,6 @@ if __name__ == '__main__':
     threshhold = rospy.get_param( '~threshhold' )
     speed    = rospy.get_param( '~speed' )
     worker = Worker( BagInfo( filepath ), videofilepath, threshhold, speed )
-    worker.start( speed=20 )
+    worker.start( speed=5 )
     print 'Worker finished, all threads closed'
     print threading._active

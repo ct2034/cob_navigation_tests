@@ -157,7 +157,11 @@ class SimpleViewer( object ):
       points = {}
       pl_points = {}
       for tfframe in data_json['points'].keys():
-        points[tfframe] = np.array(data_json['points'][tfframe])
+        if "gazebo" in tfframe:
+          points["/ground_truth"] = np.array(data_json['points'][tfframe])
+          tfframe = "/ground_truth"
+        else:
+          points[tfframe] = np.array(data_json['points'][tfframe])
         pl_points[tfframe], = ax_points.plot(points[tfframe][:,1], points[tfframe][:,2])
       ax_points.set_aspect('equal')
       ax_points.legend(pl_points.values(), points.keys(), 'best')
@@ -175,7 +179,7 @@ class SimpleViewer( object ):
       points[jumps_name] = np.array(data_json["delta_jumps"])
       pl_points[jumps_name], = ax_points.plot(points[jumps_name][:,1], points[jumps_name][:,2], 'mo')
       ax_points.legend(pl_points.values(), points.keys(), 'best')
-    ax_deltas = fig.add_subplot(222)  
+    ax_deltas = fig.add_subplot(122)  
     if ("deltas" in data_json.keys()) and (data_json['deltas']): # deltas in the dict    
       deltas = {}
       pl_deltas = {}
@@ -194,25 +198,25 @@ class SimpleViewer( object ):
       jumps_arr = np.array(data_json["delta_jumps"])
       pl_jumps, = ax_deltas.plot(jumps_arr[:,0], np.zeros(len(jumps_arr[:,0])), 'mo')
       ax_deltas.legend((pl_x, pl_y, pl_p, pl_jumps), ('x', 'y', 'phi', 'jumps'), 'best')
-    ax_covars = fig.add_subplot(224)
-    if ("covariances" in data_json.keys()) and (data_json['covariances']): # points in the dict
-      covars = {}
-      pl_covars = {}
-      covars_arr = np.array(data_json['covariances'])
-      pl_x, = ax_covars.plot(covars_arr[:,0], covars_arr[:,1])
-      pl_y, = ax_covars.plot(covars_arr[:,0], covars_arr[:,2])
-      pl_p, = ax_covars.plot(covars_arr[:,0], covars_arr[:,3])
-      ax_covars.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
-      ax_covars.set_title('Covariance - '+info_str)
-      ax_covars.set_xlabel('Time [s]')
-      ax_covars.set_ylabel('Covariance [m, rad]')
-      ax_covars.set_ylim(
-        ( np.min(covars_arr[:,1:3])-.003 ), 
-        ( np.max(covars_arr[:,1:3])+.004 ) 
-      )
-    else:
-      ax_covars.text( 0.5, 0.5, 'No Covariance Data', verticalalignment='center', horizontalalignment='center')
-      ax_covars.axis('off') 
+    #ax_covars = fig.add_subplot(224)
+    #if ("covariances" in data_json.keys()) and (data_json['covariances']): # points in the dict
+    ###  covars = {}
+    #  pl_covars = {}
+    #  covars_arr = np.array(data_json['covariances'])
+    ##  pl_x, = ax_covars.plot(covars_arr[:,0], covars_arr[:,1])
+    #  pl_y, = ax_covars.plot(covars_arr[:,0], covars_arr[:,2])
+    #  pl_p, = ax_covars.plot(covars_arr[:,0], covars_arr[:,3])
+    ##  ax_covars.legend((pl_x, pl_y, pl_p), ('x', 'y', 'phi'), 'best')
+    #  ax_covars.set_title('Covariance - '+info_str)
+    #  ax_covars.set_xlabel('Time [s]')
+    #  ax_covars.set_ylabel('Covariance [m, rad]')
+    #  ax_covars.set_ylim(
+    ##    ( np.min(covars_arr[:,1:3])-.003 ), 
+    #    ( np.max(covars_arr[:,1:3])+.004 ) 
+    #  )
+    #else:
+    #  ax_covars.text( 0.5, 0.5, 'No Covariance Data', verticalalignment='center', horizontalalignment='center')
+    #  ax_covars.axis('off') 
     return fig
     
         
