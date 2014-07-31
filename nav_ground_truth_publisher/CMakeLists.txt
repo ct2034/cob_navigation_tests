@@ -5,7 +5,7 @@ project(nav_ground_truth_publisher)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  ipa_navigation_bringup
+#  ipa_navigation_bringup
   rospy
   tf
   amcl

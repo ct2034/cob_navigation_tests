@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import roslib
 roslib.load_manifest( 'navigation_test_analysis' )
-import rospy, os, re, subprocess, sys, time, datetime, traceback
+import rospy, os, re, subprocess, sys, time, datetime, traceback, string
 import navigation_test_helper.msg
 import subprocess, threading
 from navigation_test_helper.metricsObserverTF import MetricsObserverTF
@@ -35,7 +35,8 @@ class Worker( object ):
         # now replayer can be started as it leads to the creation of framefiles
         
         player   = BagReplayer( self.bagInfo.filepath )
-        try:
+        #try:
+        if True:
             player.play( speed ) # blocking -> wait for it ...
             
             ## create the video
@@ -49,6 +50,13 @@ class Worker( object ):
             self.saveResults( data )            
             self.bagInfo.setAnalyzed()
 
+        #except Exception:
+        #    pass
+
+    def UNUSE(self):
+        try:
+            print "nix"
+      
         except BagAnalyzer.NoStatusReceivedError:
             print "except BagAnalyzer.NoStatusReceivedError"
             self._terminateScreenRecorderAndMetricsObserver()
@@ -122,12 +130,18 @@ class Worker( object ):
 
     def saveResults( self, data ):
         filename       = self.bagInfo.rawFilename
-        repositoryName = self._getRepositoryNameFromArgsOrData( data )
+        print "FILE: " + filename
+        repositoryName = "git@github.com:ct2034/cob_navigation_tests_results"#self._getRepositoryNameFromArgsOrData( data )
+        print "repositoryName: " + repositoryName
         subdirectories = ( data[ 'navigation' ], data[ 'robot' ], data[ 'scenario' ] )
+        print "subdirectories: " + string.join(subdirectories)
 
         with Git( repositoryName )  as r:
+        
+            print r
             path = r.mkdir( subdirectories )
             filepath = '%s/result_%s.json' % ( path, filename )
+            print "PATH: " + filepath
             resultWriter = JsonFileHandler( filepath )
             resultWriter.write( data )
 
@@ -207,7 +221,9 @@ class BagAnalyzer( object ):
         self._collisions              = 0
         self._collisionsTopic         = None
         self._startedCameras          = {}
-        self.setupStatusListener()
+        #self.setupStatusListener()
+        self._statusCallback(None)
+        print "======= called back"
 
     def setupStatusListener( self ):
         print 'Listening to /navigation_test/status'
@@ -234,7 +250,7 @@ class BagAnalyzer( object ):
         self._metricsObserver.start()
         self._tfDiffObserver.start()
         self._tfPointsObserver.start()
-        self._stateEkfObserver.start()
+        #self._stateEkfObserver.start()
         self._startTime = None
         self._localtime = None
 
@@ -246,22 +262,27 @@ class BagAnalyzer( object ):
             self._metricsObserver.stop()
             self._tfDiffObserver.stop()
             self._tfPointsObserver.stop()
-            self._stateEkfObserver.stop()
+            #self._stateEkfObserver.stop()
 
     def _unregisterSubscribers( self ):
         for subscriber in self._subscribers:
             subscriber.unregister()
 
     def serialize( self ):
+        print "======== SERIALIZE!"
         #self._assertNoUnrecoverableErrorOccured()
-        data = self._metricsObserver.serialize()
-        data[ 'error'              ] = self._error
-        data[ 'duration'           ] = self._duration
+        data = {}#self._metricsObserver.serialize()
+        #data[ 'error'              ] = self._error
+        #data[ 'duration'           ] = self._duration
         data[ 'filename'           ] = self._filename
+        print "======== SERIALIZE!"
         data[ 'localtime'          ] = self._localtime
-        data[ 'collisions'         ] = self._collisions
+        print "======== SERIALIZE!"
+        #data[ 'collisions'         ] = self._collisions
         data[ 'localtimeFormatted' ] = self._localtimeFormatted()
+        print "======== SERIALIZE!"
         data[ 'deltas'             ] = self._tfDiffObserver.serialize()
+        print "======== SERIALIZE!"
         data[ 'deltas_stds'        ] = self._tfDiffObserver.serializeStds()
         data[ 'deltas_means'       ] = self._tfDiffObserver.serializeMeans()
         data[ 'delta_jumps'        ] = self._tfDiffObserver.serializeJumps()
@@ -272,6 +293,7 @@ class BagAnalyzer( object ):
         data[ 'covariance_stds'    ] = self._stateEkfObserver.serializeStds()
         data[ 'covariance_means'   ] = self._stateEkfObserver.serializeMeans()
         data = dict( data.items() + self._setting.items() )
+        #print data
         return data
 
     def _assertNoUnrecoverableErrorOccured( self ):
@@ -282,22 +304,24 @@ class BagAnalyzer( object ):
 
     def _localtimeFormatted( self ):
         print 'Localtime: %s' % self._localtime
-        d = datetime.datetime.fromtimestamp( self._localtime )
+        d = datetime.datetime.now()#fromtimestamp( self._localtime )
         return d.strftime( '%Y-%m-%d' )
 
     def _collisionCallback( self, msg ):
         self._collisions += 1
 
     def _statusCallback( self, msg ):
-        if not self._active: return
+        #if not self._active: return
 
-        self._startTime                    = msg.starttime
-        self._localtime                    = msg.localtime
-        self._setting[ 'robot' ]           = msg.setting.robot
-        self._setting[ 'navigation' ]      = msg.setting.navigation
-        self._setting[ 'scenario' ]        = msg.setting.scenario
+        #self._startTime                    = msg.starttime
+        self._localtime                    = datetime.datetime.now()#msg.localtime
+        self._setting[ 'robot' ]           = "raw3-1"#msg.setting.robot
+        self._setting[ 'navigation' ]      = "2dnav_ipa_eband"#msg.setting.navigation
+        self._setting[ 'scenario' ]        = "scene_rob"#msg.setting.scenario
         self._setting[ 'repository' ]      = "git@github.com:ct2034/cob_navigation_tests_results" #msg.setting.repository
-        self._setting[ 'collisionsTopic' ] = msg.setting.collisionsTopic
+        self._setting[ 'collisionsTopic' ] = "None"#msg.setting.collisionsTopic
+
+        return
 
         self._setupCollisionsListener()
     
@@ -307,7 +331,7 @@ class BagAnalyzer( object ):
 
         if msg.info == 'finished':
             self._finishedStatusReceived = True
-            self._duration = ( msg.header.stamp - self._startTime ).to_sec()
+            #self._duration = ( msg.header.stamp - self._startTime ).to_sec()
             self.stop()
             return
 
@@ -336,6 +360,6 @@ if __name__ == '__main__':
     threshhold = rospy.get_param( '~threshhold' )
     speed    = rospy.get_param( '~speed' )
     worker = Worker( BagInfo( filepath ), videofilepath, threshhold, speed )
-    worker.start( speed=speed )
+    worker.start( speed=20 )
     print 'Worker finished, all threads closed'
     print threading._active
