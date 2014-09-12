@@ -8,11 +8,11 @@ There is three ways to use the navigation tests:
 ## local simulation test
 
 1. Create a testing workspace
-´´´bash
+```bash
 mkdir -p ~/ros/testing_ws/src
 cd ~/ros/testing_ws
 catkin_init_workspace 
-´´´
+```
 
 2. Make sure to clone the following sources:
   * 
