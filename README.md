@@ -10,7 +10,7 @@ There is three ways to use the navigation tests:
 1. Create a testing workspace
 ```bash
 mkdir -p ~/ros/testing_ws/src
-cd ~/ros/testing_ws
+cd ~/ros/testing_ws/src
 catkin_init_workspace 
 ```
 
@@ -24,5 +24,11 @@ catkin_init_workspace
   git clone git@github.com:ipa320/ipa_navigation_planning.git
   git clone git@github.com:ipa320/ipa_navigation_driver.git
   git clone git@github.com:ipa320/ipa_navigation_common.git
-  
   ```
+3. The test configuration is stored in a designated package. 
+  * To create your own: fork the example setup: [https://github.com/ct2034/my_navigation_test] 
+  * and clone your configuration: `git clone git@github.com:<<MY_USER>>/<<MY_CONFIG>>.git` (which works also with the example setup)
+  
+4. Setup a path to store the bag files:
+  * `mkdir -p ~/ros/bagFiles`
+  * `export BAG_PATH='~/ros/bagFiles/'`
