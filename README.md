@@ -50,4 +50,4 @@ Before running the test routine ensure that the robot is set up correctly and is
 
 ## Tests on jenkins server
   
-To run the test in Jenkins, you need to set up a new job for the configuration package. Select `Graphics test` to add the test. Additionally add all the dependencies described (above)[http://github.com/ct2034/cob_navigation_tests#Dependencies].
+To run the test in Jenkins, you need to set up a new job for the configuration package. Select `Graphics test` to add the test. Additionally add all the dependencies described (<a href="#Dependencies">above</a>).
